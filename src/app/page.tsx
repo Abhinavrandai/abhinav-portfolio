@@ -477,7 +477,7 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
 // ━━━ Contact Form (Web3Forms integration) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Get your free access key from https://web3forms.com (enter your email,
 // receive key via email). Replace the placeholder below.
-const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE'
+const WEB3FORMS_ACCESS_KEY = 'da4e4629-b42f-4463-9df2-58f690e53cff'
 
 function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
