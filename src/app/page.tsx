@@ -599,19 +599,30 @@ function ContactForm() {
             onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
           />
         </div>
-      </div>
-
-      <div>
-        <label htmlFor="subject" style={labelStyle}>Subject</label>
-        <input
-          id="subject"
-          name="subject"
-          type="text"
-          placeholder="What's this about?"
-          style={inputStyle}
-          onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
-          onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
-        />
+        <div>
+          <label htmlFor="phone" style={labelStyle}>Phone</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="+91 9876543210"
+            style={inputStyle}
+            onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
+            onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
+          />
+        </div>
+        <div>
+          <label htmlFor="subject" style={labelStyle}>Subject</label>
+          <input
+            id="subject"
+            name="subject"
+            type="text"
+            placeholder="What's this about?"
+            style={inputStyle}
+            onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
+            onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
+          />
+        </div>
       </div>
 
       <div>
@@ -665,7 +676,7 @@ function ContactForm() {
       </button>
 
       <p className="text-center text-xs" style={{ color: `${COLORS.textMuted}88` }}>
-        Form submissions are delivered to abhinavrandai403@gmail.com via Web3Forms.
+        Form submissions are delivered to abhinavrandai403@gmail.com via Web3Forms. Phone is optional but recommended if you want a call back.
       </p>
     </form>
   )
