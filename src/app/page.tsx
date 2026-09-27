@@ -19,6 +19,8 @@ import {
   CheckCircleIcon,
   ZapIcon,
   TerminalIcon,
+  MenuIcon,
+  XIcon,
 } from 'lucide-react'
 
 // ─── Crystal Blue palette (matches PDF case study cover) ──────────────────
@@ -185,6 +187,26 @@ async function hashPassword(password) {
 
 // ─── Sub-components ────────────────────────────────────────────────────────
 function Nav() {
+  const [open, setOpen] = useState(false)
+
+  // Close the menu whenever a link is clicked or the viewport grows past md
+  useEffect(() => {
+    if (!open) return
+    const onResize = () => {
+      if (window.innerWidth >= 768) setOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [open])
+
+  const navLinks = [
+    { href: '#architecture', label: 'Architecture' },
+    { href: '#features',     label: 'Features' },
+    { href: '#migration',    label: 'Migration' },
+    { href: '#engineering',   label: 'Engineering' },
+    { href: '#contact',      label: 'Contact' },
+  ]
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
          style={{ background: 'rgba(10, 22, 40, 0.7)', borderBottom: '1px solid rgba(77, 168, 218, 0.15)' }}>
@@ -195,18 +217,57 @@ function Nav() {
             jf-erp<span style={{ color: COLORS.textMuted }}> · case study</span>
           </span>
         </div>
+
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <a href="#architecture" className="hover:text-white transition-colors" style={{ color: COLORS.textMuted }}>Architecture</a>
-          <a href="#features"     className="hover:text-white transition-colors" style={{ color: COLORS.textMuted }}>Features</a>
-          <a href="#migration"    className="hover:text-white transition-colors" style={{ color: COLORS.textMuted }}>Migration</a>
-          <a href="#engineering"   className="hover:text-white transition-colors" style={{ color: COLORS.textMuted }}>Engineering</a>
-          <a href="#contact"      className="hover:text-white transition-colors" style={{ color: COLORS.textMuted }}>Contact</a>
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} className="hover:text-white transition-colors" style={{ color: COLORS.textMuted }}>
+              {l.label}
+            </a>
+          ))}
+          <a href="#contact" className="text-xs font-mono px-3 py-1.5 rounded transition-all hover:scale-105"
+             style={{ background: COLORS.accent, color: COLORS.bgDark }}>
+            Get in touch →
+          </a>
         </div>
-        <a href="#contact" className="text-xs font-mono px-3 py-1.5 rounded transition-all hover:scale-105"
-           style={{ background: COLORS.accent, color: COLORS.bgDark }}>
-          Get in touch →
-        </a>
+
+        {/* Mobile CTA + hamburger */}
+        <div className="flex md:hidden items-center gap-2">
+          <a href="#contact" className="text-xs font-mono px-3 py-1.5 rounded transition-all"
+             style={{ background: COLORS.accent, color: COLORS.bgDark }}>
+            Get in touch →
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            className="p-2 rounded transition-colors hover:bg-white/5"
+            style={{ color: COLORS.textCool }}
+          >
+            {open ? <XIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {open && (
+        <div className="md:hidden border-t" style={{ borderColor: 'rgba(77, 168, 218, 0.15)', background: 'rgba(10, 22, 40, 0.97)' }}>
+          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
+            {navLinks.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="block px-3 py-2.5 rounded text-sm transition-colors hover:bg-white/5"
+                style={{ color: COLORS.textMuted }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
