@@ -956,39 +956,74 @@ function MisIntelligenceRoadmap() {
       </CaseStudySection>
 
       {/* 02 — Planned Architecture */}
-      <CaseStudySection id="planned-architecture" num="02 — Planned Architecture" title="Aggregation + AI layer" dark={false}>
+      <CaseStudySection id="planned-architecture" num="02 — Planned Architecture" title="A standalone system, not a module of Jalaram" dark={false}>
         <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
-          The platform will sit above existing operational systems as an aggregation and
-          intelligence layer — not replace them.
+          The MIS Intelligence Platform will be its own independent project — separate GitHub
+          repository, separate Cloudflare account, separate D1 databases. It will <strong>read</strong>
+          from Jalaram Feeds ERP (and other systems) as an external data source, but it will not
+          be hosted inside Jalaram or share Jalaram&apos;s infrastructure.
         </p>
-        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.border }}>
+        <div className="rounded-lg p-5 mb-6 grid md:grid-cols-2 gap-4"
+             style={{ background: COLORS.bgLightCard, border: `1px solid ${COLORS.border}` }}>
+          <div>
+            <div className="font-mono text-xs mb-2" style={{ color: COLORS.accentDark }}>JALARAM FEEDS ERP</div>
+            <ul className="space-y-1 text-sm" style={{ color: COLORS.textDarkMuted }}>
+              <li>• Own GitHub repository</li>
+              <li>• 8 D1 databases (operational data)</li>
+              <li>• 6 Workers (production)</li>
+              <li>• Own Cloudflare account</li>
+              <li>• Own authentication</li>
+            </ul>
+          </div>
+          <div>
+            <div className="font-mono text-xs mb-2" style={{ color: COLORS.accentDark }}>MIS INTELLIGENCE PLATFORM</div>
+            <ul className="space-y-1 text-sm" style={{ color: COLORS.textDarkMuted }}>
+              <li>• Separate GitHub repository</li>
+              <li>• Separate D1 databases (aggregated/normalized)</li>
+              <li>• Own Worker(s)</li>
+              <li>• Own Cloudflare account</li>
+              <li>• Own authentication</li>
+            </ul>
+          </div>
+        </div>
+        <p className="text-base mb-6" style={{ color: COLORS.textDarkMuted }}>
+          The platform will sit above existing operational systems as an aggregation and
+          intelligence layer — reading data from multiple sources, normalizing it into its own
+          schema, and serving management intelligence. It will not modify Jalaram&apos;s data
+          or share Jalaram&apos;s sessions.
+        </p>
+        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.border }}>
           <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
                style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
-{`   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-   │ ERP System  │  │ Sales CRM   │  │ Spreadsheets│
-   └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-          │                │                │
-          └────────────────┼────────────────┘
-                           ▼
-              ┌────────────────────────────┐
-              │   MIS Aggregation Layer    │
-              │   (Cloudflare Workers)     │
-              └─────────────┬──────────────┘
-                           │
-              ┌────────────┴──────────────┐
-              │                          │
-              ▼                          ▼
-   ┌──────────────────┐     ┌──────────────────┐
-   │  D1 Data Lake    │     │ Workers AI Layer │
-   │ (Normalized)     │     │ (Anomaly Det.)   │
-   └────────┬─────────┘     └────────┬─────────┘
-            │                         │
-            └────────────┬────────────┘
-                         ▼
-              ┌──────────────────────┐
-              │  Executive Dashboards │
-              │  + Scheduled Reports │
-              └──────────────────────┘`}
+{`   ┌─────────────────────────┐   ┌─────────────────────────┐
+   │  JALARAM FEEDS ERP      │   │  OTHER SYSTEMS           │
+   │  (separate repo + DBs)   │   │  (CRM, Sheets, etc.)    │
+   │  8 D1 databases          │   │                          │
+   └────────────┬─────────────┘   └─────────────┬────────────┘
+                │  READ-ONLY                  │  READ-ONLY
+                │  (snapshot / API)            │
+                └──────────────┬──────────────┘
+                               ▼
+                  ┌────────────────────────────┐
+                  │   MIS AGGREGATION LAYER    │
+                  │   (own repo + own account)  │
+                  │   Cloudflare Workers        │
+                  └─────────────┬──────────────┘
+                                │
+                  ┌─────────────┴──────────────┐
+                  │                            │
+                  ▼                            ▼
+   ┌──────────────────────────┐   ┌──────────────────────────┐
+   │   MIS D1 DATABASES       │   │   WORKERS AI LAYER       │
+   │   (separate, normalized)│   │   (anomaly detection)    │
+   └───────────┬──────────────┘   └─────────────┬────────────┘
+               │                                │
+               └───────────────┬────────────────┘
+                               ▼
+                  ┌────────────────────────────┐
+                  │  EXECUTIVE DASHBOARDS       │
+                  │  + SCHEDULED REPORTS         │
+                  └────────────────────────────┘`}
           </pre>
         </div>
       </CaseStudySection>
@@ -1072,32 +1107,46 @@ function MisIntelligenceRoadmap() {
         </div>
       </CaseStudySection>
 
-      {/* 06 — Connection to Jalaram ERP */}
-      <CaseStudySection id="connection" num="06 — Connection to Jalaram ERP" title="Built on lessons learned" dark={false}>
+      {/* 06 — Relationship with Jalaram ERP */}
+      <CaseStudySection id="connection" num="06 — Relationship with Jalaram ERP" title="Independent — but reads from Jalaram" dark={false}>
         <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
-          The Jalaram Feeds ERP proved that operational transactions could live on Cloudflare
-          Workers + D1. The MIS Intelligence Platform takes the next step — turning those
-          transactions into management intelligence.
+          The MIS Intelligence Platform is a <strong>separate project</strong> with its own repo,
+          its own databases, and its own deployment. It is <strong>not</strong> a module of
+          Jalaram Feeds ERP — it is a sibling system that consumes Jalaram&apos;s data
+          (read-only) as one of several input sources.
         </p>
+        <div className="rounded-lg p-5 mb-6 flex items-start gap-3"
+             style={{ background: COLORS.bgLightCard, border: `1px solid ${COLORS.border}`, borderLeft: `4px solid ${COLORS.accentDark}` }}>
+          <AlertCircleIcon className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.accentDark }} />
+          <div>
+            <div className="font-bold text-sm mb-1" style={{ color: COLORS.textDark }}>Key clarification</div>
+            <p className="text-sm" style={{ color: COLORS.textDarkMuted }}>
+              Jalaram Feeds ERP will be one of MIS&apos;s data sources. MIS will <strong>not</strong>
+              write back to Jalaram, will <strong>not</strong> share Jalaram&apos;s users table, and
+              will <strong>not</strong> be deployed inside Jalaram&apos;s account. The two systems
+              communicate over read-only API calls (or scheduled snapshot syncs), nothing more.
+            </p>
+          </div>
+        </div>
         <div className="grid md:grid-cols-2 gap-5">
           <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>From Jalaram ERP</h3>
+            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>From Jalaram ERP, MIS reuses:</h3>
             <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
-              <li>• Proven Cloudflare Workers patterns</li>
-              <li>• 8 D1 databases as data sources</li>
-              <li>• Day End report as starting point</li>
-              <li>• Sahayak AI as NL query prototype</li>
-              <li>• WhatsApp distribution already wired</li>
+              <li>• Cloudflare Workers architectural patterns (proven)</li>
+              <li>• Sahayak AI as natural-language query prototype</li>
+              <li>• Day End report format as starting point</li>
+              <li>• WhatsApp distribution channel integration patterns</li>
+              <li>• Lesson: gas-shim.js proxy for backward-compatible migration</li>
             </ul>
           </div>
           <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>To MIS Platform</h3>
+            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>MIS does NOT inherit from Jalaram:</h3>
             <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
-              <li>• Multi-system aggregation (not just one ERP)</li>
-              <li>• Forward-looking forecasting</li>
-              <li>• AI-assisted anomaly detection</li>
-              <li>• Executive-grade dashboards</li>
-              <li>• Cross-business intelligence layer</li>
+              <li>• Own GitHub repository (not a fork of Jalaram)</li>
+              <li>• Own D1 databases (not shared with Jalaram&apos;s 8)</li>
+              <li>• Own Cloudflare account (not under Jalaram&apos;s account)</li>
+              <li>• Own authentication (separate users, separate sessions)</li>
+              <li>• Own deployment pipeline (separate wrangler config)</li>
             </ul>
           </div>
         </div>
