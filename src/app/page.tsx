@@ -62,6 +62,7 @@ type Project = {
   summary: string
   techBadges: string[]
   stats: { num: string; label: string }[]
+  comingSoon?: boolean
   liveUrl?: string
   repoUrl?: string
   pdfUrl?: string
@@ -86,12 +87,24 @@ const PROJECTS: Project[] = [
     ],
     pdfUrl: '/Jalaram_Feeds_ERP_Case_Study.pdf',
   },
-  // ─── Future projects: just add another object below ───
-  // {
-  //   slug: 'next-project',
-  //   title: 'Next Project',
-  //   ...
-  // }
+  {
+    slug: 'mis-intelligence-platform',
+    title: 'MIS Intelligence Platform',
+    year: 'Coming 2026',
+    role: 'Full-Stack Engineer',
+    client: 'Business Intelligence / Internal Tools',
+    tagline: 'Management Information System with AI-assisted insights',
+    summary:
+      'A next-generation management information platform that aggregates operational data from multiple business systems, surfaces anomalies through AI-assisted detection, and delivers executive-ready dashboards in real time.',
+    techBadges: ['Cloudflare Workers', 'D1', 'Workers AI', 'Real-time Dashboards', 'Anomaly Detection', 'ETL Pipeline', 'Role-based Access', 'Scheduled Reports'],
+    stats: [
+      { num: 'TBD', label: 'Workers' },
+      { num: 'TBD', label: 'Data Sources' },
+      { num: 'TBD', label: 'LOC' },
+      { num: 'WIP', label: 'Status' },
+    ],
+    comingSoon: true,
+  },
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -397,12 +410,23 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
             <button
               key={p.slug}
               onClick={() => onSelect(p)}
-              className="group text-left rounded-lg p-7 transition-all hover:scale-[1.02] focus:outline-none focus:ring-2 w-full"
+              className="group text-left rounded-lg p-7 transition-all hover:scale-[1.02] focus:outline-none focus:ring-2 w-full relative"
               style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(77, 168, 218, 0.2)',
+                background: p.comingSoon ? 'rgba(77, 168, 218, 0.03)' : 'rgba(255, 255, 255, 0.03)',
+                border: p.comingSoon ? `1px dashed ${COLORS.accent}66` : '1px solid rgba(77, 168, 218, 0.2)',
               }}
             >
+              {/* Coming Soon badge */}
+              {p.comingSoon && (
+                <div className="absolute top-4 right-4 flex items-center gap-1.5 px-2 py-1 rounded"
+                     style={{ background: COLORS.accent + '22', border: `1px solid ${COLORS.accent}` }}>
+                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: COLORS.accent }} />
+                  <span className="font-mono text-[10px] tracking-wider uppercase font-bold" style={{ color: COLORS.accent }}>
+                    Coming Soon
+                  </span>
+                </div>
+              )}
+
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <div className="font-mono text-xs mb-1" style={{ color: COLORS.accent }}>
@@ -418,8 +442,10 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
                     {p.role} · {p.client}
                   </div>
                 </div>
-                <ArrowRightIcon className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0 ml-3"
-                                style={{ color: COLORS.accent }} />
+                {!p.comingSoon && (
+                  <ArrowRightIcon className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0 ml-3"
+                                  style={{ color: COLORS.accent }} />
+                )}
               </div>
 
               <p className="text-sm leading-relaxed mb-5" style={{ color: COLORS.textMuted }}>
@@ -460,11 +486,22 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
 
               {/* CTA */}
               <div className="flex items-center gap-2 pt-2 border-t" style={{ borderColor: 'rgba(77, 168, 218, 0.15)' }}>
-                <span className="text-sm font-medium" style={{ color: COLORS.accent }}>
-                  View Case Study
-                </span>
-                <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-all"
-                                style={{ color: COLORS.accent }} />
+                {p.comingSoon ? (
+                  <>
+                    <SparklesIcon className="w-4 h-4" style={{ color: COLORS.accent }} />
+                    <span className="text-sm font-medium" style={{ color: COLORS.accent }}>
+                      Preview the roadmap
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-sm font-medium" style={{ color: COLORS.accent }}>
+                      View Case Study
+                    </span>
+                    <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-all"
+                                    style={{ color: COLORS.accent }} />
+                  </>
+                )}
               </div>
             </button>
           ))}
@@ -868,7 +905,227 @@ function CaseStudySection({ id, num, title, dark = false, children }: {
   )
 }
 
+// ━━━ MIS Intelligence Platform — Coming Soon Roadmap ━━━━━━━━━━━━━━━━━━━━━━━━
+function MisIntelligenceRoadmap() {
+  return (
+    <>
+      {/* Status banner */}
+      <CaseStudySection id="case-content" num="Status" title="Currently in development" dark={false}>
+        <div className="rounded-lg p-6 mb-8 flex items-start gap-4"
+             style={{ background: 'rgba(77,168,218,0.08)', border: `1px solid ${COLORS.accent}` }}>
+          <SparklesIcon className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.accentDark }} />
+          <div>
+            <h3 className="font-bold text-lg mb-2" style={{ color: COLORS.textDark }}>
+              This case study is being written as the project ships.
+            </h3>
+            <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
+              The MIS Intelligence Platform is currently in active development. The architecture,
+              modules, and engineering decisions below represent the planned scope and design
+              direction. As features ship to production, this page will be updated with real
+              numbers, screenshots, and learnings.
+            </p>
+          </div>
+        </div>
+      </CaseStudySection>
+
+      {/* 01 — The Vision */}
+      <CaseStudySection id="vision" num="01 — The Vision" title="One source of operational truth" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          Most growing businesses end up with operational data scattered across multiple systems —
+          ERPs, CRMs, spreadsheets, manual reports, and tribal knowledge locked in people&apos;s heads.
+          Management decisions get delayed waiting for someone to compile a report.
+        </p>
+        <p className="text-base mb-6" style={{ color: COLORS.textMuted }}>
+          The MIS Intelligence Platform is being designed to:
+        </p>
+        <ul className="grid md:grid-cols-2 gap-2 mb-6">
+          {[
+            'Aggregate operational data from multiple systems into one view',
+            'Surface anomalies before they become problems',
+            'Deliver executive-ready dashboards in real time',
+            'Use AI to assist — not replace — management decisions',
+            'Connect to existing Cloudflare Workers infrastructure',
+            'Schedule and distribute automated management reports',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2 text-sm" style={{ color: COLORS.textCool }}>
+              <span style={{ color: COLORS.accent }}>→</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </CaseStudySection>
+
+      {/* 02 — Planned Architecture */}
+      <CaseStudySection id="planned-architecture" num="02 — Planned Architecture" title="Aggregation + AI layer" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          The platform will sit above existing operational systems as an aggregation and
+          intelligence layer — not replace them.
+        </p>
+        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.border }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+   │ ERP System  │  │ Sales CRM   │  │ Spreadsheets│
+   └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
+          │                │                │
+          └────────────────┼────────────────┘
+                           ▼
+              ┌────────────────────────────┐
+              │   MIS Aggregation Layer    │
+              │   (Cloudflare Workers)     │
+              └─────────────┬──────────────┘
+                           │
+              ┌────────────┴──────────────┐
+              │                          │
+              ▼                          ▼
+   ┌──────────────────┐     ┌──────────────────┐
+   │  D1 Data Lake    │     │ Workers AI Layer │
+   │ (Normalized)     │     │ (Anomaly Det.)   │
+   └────────┬─────────┘     └────────┬─────────┘
+            │                         │
+            └────────────┬────────────┘
+                         ▼
+              ┌──────────────────────┐
+              │  Executive Dashboards │
+              │  + Scheduled Reports │
+              └──────────────────────┘`}
+          </pre>
+        </div>
+      </CaseStudySection>
+
+      {/* 03 — Planned Modules */}
+      <CaseStudySection id="planned-modules" num="03 — Planned Modules" title="What it will do" dark={true}>
+        <div className="grid md:grid-cols-2 gap-5">
+          {[
+            { title: 'Executive Dashboards', items: ['Real-time KPI tracking', 'Cross-system drill-downs', 'Customizable views per role', 'Mobile-first responsive UI'] },
+            { title: 'AI-Assisted Anomaly Detection', items: ['Statistical outliers in sales/purchase', 'Inventory level warnings', 'Unusual user activity patterns', 'Smart threshold learning'] },
+            { title: 'Natural-Language Business Queries', items: ['"Show me top 10 customers this month"', '"Which items are below reorder level?"', '"Compare production vs last quarter"', 'AI-assisted answer composition'] },
+            { title: 'Automated Reporting', items: ['Scheduled WhatsApp/email reports', 'Daily, weekly, monthly cadences', 'PDF exports with charts', 'Distributed recipient lists'] },
+            { title: 'ETL Pipeline', items: ['Sync from ERP, CRM, sheets', 'Scheduled data refresh', 'Schema validation', 'Error logging and retry'] },
+            { title: 'Forecasting Engine', items: ['Inventory forecasting', 'Sales trend projection', 'Seasonal pattern detection', 'Confidence intervals'] },
+          ].map((m) => (
+            <div key={m.title}
+                 className="rounded-lg p-5"
+                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+              <h3 className="text-base font-bold mb-3" style={{ color: COLORS.accent }}>{m.title}</h3>
+              <ul className="space-y-1">
+                {m.items.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-xs" style={{ color: COLORS.textMuted }}>
+                    <span style={{ color: COLORS.accent }}>•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 04 — Planned Tech Stack */}
+      <CaseStudySection id="planned-stack" num="04 — Planned Tech Stack" title="What it will be built with" dark={false}>
+        <div className="flex flex-wrap gap-2">
+          {[
+            'Cloudflare Workers', 'Cloudflare D1', 'Workers AI', 'Browser Rendering',
+            'Real-time Dashboards', 'ETL Pipeline', 'Scheduled Cron Triggers',
+            'WhatsApp API', 'Email API', 'PDF Generation', 'Role-based Access',
+            'AI Anomaly Detection', 'Time-series Analysis', 'WebSocket (live updates)',
+          ].map((tech) => (
+            <span key={tech}
+                  className="px-3 py-1.5 rounded text-sm font-mono transition-all hover:scale-105"
+                  style={{ background: 'white', border: `1px solid ${COLORS.border}`, color: COLORS.textDark }}>
+              {tech}
+            </span>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 05 — Roadmap */}
+      <CaseStudySection id="roadmap-timeline" num="05 — Roadmap" title="Where it stands today" dark={true}>
+        <div className="space-y-4">
+          {[
+            { phase: 'Phase 1', title: 'Data Aggregation Layer', status: 'Planned', desc: 'Build ETL pipelines to sync operational data from ERP, CRM, and spreadsheets into a normalized D1 schema.' },
+            { phase: 'Phase 2', title: 'Executive Dashboards', status: 'Planned', desc: 'Real-time KPI dashboards with drill-downs, role-based views, and mobile-first responsive design.' },
+            { phase: 'Phase 3', title: 'AI Anomaly Detection', status: 'Planned', desc: 'Workers AI-powered anomaly detection — surface outliers in sales, inventory, and user activity before they become problems.' },
+            { phase: 'Phase 4', title: 'Natural-Language Queries', status: 'Planned', desc: 'Scoped AI assistant similar to Sahayak in Jalaram ERP — let management ask questions in plain English.' },
+            { phase: 'Phase 5', title: 'Automated Reporting + Forecasting', status: 'Planned', desc: 'Scheduled WhatsApp/email reports, PDF generation, and inventory forecasting with confidence intervals.' },
+          ].map((r) => (
+            <div key={r.phase} className="rounded-lg p-5 flex items-start gap-4"
+                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+              <div className="flex-shrink-0">
+                <div className="font-mono text-xs px-2 py-1 rounded"
+                     style={{ background: COLORS.accent + '22', color: COLORS.accent }}>
+                  {r.phase}
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-1">
+                  <h3 className="font-bold" style={{ color: COLORS.textCool }}>{r.title}</h3>
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded"
+                        style={{ background: 'rgba(255,255,255,0.05)', color: COLORS.textMuted }}>
+                    {r.status}
+                  </span>
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: COLORS.textMuted }}>{r.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 06 — Connection to Jalaram ERP */}
+      <CaseStudySection id="connection" num="06 — Connection to Jalaram ERP" title="Built on lessons learned" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          The Jalaram Feeds ERP proved that operational transactions could live on Cloudflare
+          Workers + D1. The MIS Intelligence Platform takes the next step — turning those
+          transactions into management intelligence.
+        </p>
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>From Jalaram ERP</h3>
+            <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
+              <li>• Proven Cloudflare Workers patterns</li>
+              <li>• 8 D1 databases as data sources</li>
+              <li>• Day End report as starting point</li>
+              <li>• Sahayak AI as NL query prototype</li>
+              <li>• WhatsApp distribution already wired</li>
+            </ul>
+          </div>
+          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>To MIS Platform</h3>
+            <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
+              <li>• Multi-system aggregation (not just one ERP)</li>
+              <li>• Forward-looking forecasting</li>
+              <li>• AI-assisted anomaly detection</li>
+              <li>• Executive-grade dashboards</li>
+              <li>• Cross-business intelligence layer</li>
+            </ul>
+          </div>
+        </div>
+      </CaseStudySection>
+
+      {/* Get notified */}
+      <CaseStudySection id="notify" num="07 — Get Notified" title="When this ships, you&apos;ll know" dark={true}>
+        <div className="text-center max-w-xl mx-auto">
+          <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+            Want to know when the MIS Intelligence Platform goes live? Drop a message through
+            the contact form below with &quot;MIS Platform&quot; in the subject line — I&apos;ll
+            personally reach out when there&apos;s something worth showing.
+          </p>
+          <a href="#contact"
+             className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-sm font-medium transition-all hover:scale-105"
+             style={{ background: COLORS.accent, color: COLORS.bgDark }}>
+            <MailIcon className="w-4 h-4" /> Notify me when ready
+          </a>
+        </div>
+      </CaseStudySection>
+    </>
+  )
+}
+
 function CaseStudyContent({ project }: { project: Project }) {
+  if (project.slug === 'mis-intelligence-platform') {
+    return <MisIntelligenceRoadmap />
+  }
   if (project.slug !== 'jalaram-feeds-erp') {
     return (
       <CaseStudySection id="case-content" num="01" title="Case study coming soon">
