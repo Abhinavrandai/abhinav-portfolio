@@ -14,36 +14,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jalaram Feeds ERP — A Cloudflare Workers Case Study | Abhinav Randai",
+  title: "Abhinav Randai · Full-Stack Engineer",
   description:
-    "A full-scale ERP for an animal-feed manufacturer, migrated from Google Apps Script to Cloudflare Workers + D1. 6 Workers, 8 D1 databases, 22k lines, 39 test files, zero-downtime migration.",
+    "Full-stack engineer building production systems on Cloudflare Workers, D1, and the edge. Portfolio, case studies, and contact.",
   keywords: [
+    "Abhinav Randai",
+    "Full-stack Engineer",
     "Cloudflare Workers",
     "Cloudflare D1",
     "ERP",
-    "PBKDF2",
+    "edge computing",
+    "portfolio",
+    "case study",
     "service bindings",
-    "Workers AI",
-    "Browser Rendering",
+    "PBKDF2",
     "WhatsApp API",
     "R2",
-    "edge computing",
-    "Abhinav Randai",
-    "case study",
   ],
   authors: [{ name: "Abhinav Randai" }],
   openGraph: {
-    title: "Jalaram Feeds ERP — A Cloudflare Workers Case Study",
+    title: "Abhinav Randai · Full-Stack Engineer",
     description:
-      "6 Workers. 8 D1 databases. 22k lines. Zero downtime migration from Google Apps Script to the Cloudflare edge.",
+      "Full-stack engineer building production systems on Cloudflare Workers + D1. Portfolio, case studies, and contact.",
     siteName: "Abhinav Randai · Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jalaram Feeds ERP — Case Study",
+    title: "Abhinav Randai · Full-Stack Engineer",
     description:
-      "A full-scale ERP migrated from Apps Script to Cloudflare Workers + D1.",
+      "Full-stack engineer building production systems on Cloudflare Workers + D1.",
   },
 };
 
