@@ -85,4 +85,13 @@ scripts/jf_erp_body.pdf
 
 # z-ai tooling (internal)
 /.z-ai-config/
-.z-ai-config
+.z-ai-config.env
+
+# Scaffold files — not part of portfolio deploy
+/.zscripts/
+/examples/
+/mini-services/
+/tests/
+/download/
+/Caddyfile
+/db/
