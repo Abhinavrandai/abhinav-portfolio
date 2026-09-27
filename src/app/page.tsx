@@ -90,17 +90,17 @@ const PROJECTS: Project[] = [
   {
     slug: 'mis-intelligence-platform',
     title: 'MIS Intelligence Platform',
-    year: 'Coming 2026',
-    role: 'Full-Stack Engineer',
-    client: 'Business Intelligence / Internal Tools',
-    tagline: 'Management Information System with AI-assisted insights',
+    year: 'Planned 2026',
+    role: 'Data Engineer / Full-Stack',
+    client: 'Nova Manufacturing Pvt. Ltd. (fictional)',
+    tagline: 'MIS · BI · Forecasting · Data Quality · Automation',
     summary:
-      'A next-generation management information platform that aggregates operational data from multiple business systems, surfaces anomalies through AI-assisted detection, and delivers executive-ready dashboards in real time.',
-    techBadges: ['Cloudflare Workers', 'D1', 'Workers AI', 'Real-time Dashboards', 'Anomaly Detection', 'ETL Pipeline', 'Role-based Access', 'Scheduled Reports'],
+      'A standalone management information system for a fictional manufacturing company (Nova Manufacturing Pvt. Ltd.). Ingests operational data, validates it, stores in relational SQL, calculates KPIs, detects anomalies, forecasts inventory, and auto-distributes management reports. Strictly independent from Jalaram Feeds ERP — separate repo, separate database, separate deployment.',
+    techBadges: ['Cloudflare Workers', 'SQL Database', 'Python + Pandas', 'Chart.js', 'Forecasting', 'Anomaly Detection', 'ETL Pipeline', 'WhatsApp API'],
     stats: [
-      { num: 'TBD', label: 'Workers' },
-      { num: 'TBD', label: 'Data Sources' },
-      { num: 'TBD', label: 'LOC' },
+      { num: '8', label: 'Modules' },
+      { num: '8', label: 'Week Plan' },
+      { num: '12+', label: 'Tables' },
       { num: 'WIP', label: 'Status' },
     ],
     comingSoon: true,
@@ -905,149 +905,186 @@ function CaseStudySection({ id, num, title, dark = false, children }: {
   )
 }
 
-// ━━━ MIS Intelligence Platform — Coming Soon Roadmap ━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━ MIS Intelligence Platform — Spec-Based Roadmap ━━━━━━━━━━━━━━━━━━━━━━━━
 function MisIntelligenceRoadmap() {
   return (
     <>
       {/* Status banner */}
-      <CaseStudySection id="case-content" num="Status" title="Currently in development" dark={false}>
+      <CaseStudySection id="case-content" num="Status" title="Specification ready · Build planned" dark={false}>
         <div className="rounded-lg p-6 mb-8 flex items-start gap-4"
              style={{ background: 'rgba(77,168,218,0.08)', border: `1px solid ${COLORS.accent}` }}>
           <SparklesIcon className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.accentDark }} />
           <div>
             <h3 className="font-bold text-lg mb-2" style={{ color: COLORS.textDark }}>
-              This case study is being written as the project ships.
+              Spec is finalized. Implementation will start per the 8-week roadmap below.
             </h3>
             <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
-              The MIS Intelligence Platform is currently in active development. The architecture,
-              modules, and engineering decisions below represent the planned scope and design
-              direction. As features ship to production, this page will be updated with real
-              numbers, screenshots, and learnings.
+              This is a build specification, not a claim that features already exist. The architecture,
+              modules, database design, and 8-week timeline below are the source of truth. As features
+              ship, this page will be updated with real screenshots and measured numbers.
             </p>
           </div>
         </div>
       </CaseStudySection>
 
-      {/* 01 — The Vision */}
-      <CaseStudySection id="vision" num="01 — The Vision" title="One source of operational truth" dark={true}>
+      {/* 01 — Product Vision */}
+      <CaseStudySection id="vision" num="01 — Product Vision" title="Decision intelligence, end to end" dark={true}>
         <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
-          Most growing businesses end up with operational data scattered across multiple systems —
-          ERPs, CRMs, spreadsheets, manual reports, and tribal knowledge locked in people&apos;s heads.
-          Management decisions get delayed waiting for someone to compile a report.
+          Build a professional management information system that ingests operational data, validates it,
+          stores it in a relational database, calculates business KPIs, detects anomalies, forecasts
+          inventory risk, generates dashboards and automatically distributes management reports.
         </p>
-        <p className="text-base mb-6" style={{ color: COLORS.textMuted }}>
-          The MIS Intelligence Platform is being designed to:
-        </p>
-        <ul className="grid md:grid-cols-2 gap-2 mb-6">
-          {[
-            'Aggregate operational data from multiple systems into one view',
-            'Surface anomalies before they become problems',
-            'Deliver executive-ready dashboards in real time',
-            'Use AI to assist — not replace — management decisions',
-            'Connect to existing Cloudflare Workers infrastructure',
-            'Schedule and distribute automated management reports',
-          ].map((item) => (
-            <li key={item} className="flex items-start gap-2 text-sm" style={{ color: COLORS.textCool }}>
-              <span style={{ color: COLORS.accent }}>→</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </CaseStudySection>
-
-      {/* 02 — Planned Architecture */}
-      <CaseStudySection id="planned-architecture" num="02 — Planned Architecture" title="A standalone system, not a module of Jalaram" dark={false}>
-        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
-          The MIS Intelligence Platform will be its own independent project — separate GitHub
-          repository, separate Cloudflare account, separate D1 databases. It will <strong>read</strong>
-          from Jalaram Feeds ERP (and other systems) as an external data source, but it will not
-          be hosted inside Jalaram or share Jalaram&apos;s infrastructure.
-        </p>
-        <div className="rounded-lg p-5 mb-6 grid md:grid-cols-2 gap-4"
-             style={{ background: COLORS.bgLightCard, border: `1px solid ${COLORS.border}` }}>
-          <div>
-            <div className="font-mono text-xs mb-2" style={{ color: COLORS.accentDark }}>JALARAM FEEDS ERP</div>
-            <ul className="space-y-1 text-sm" style={{ color: COLORS.textDarkMuted }}>
-              <li>• Own GitHub repository</li>
-              <li>• 8 D1 databases (operational data)</li>
-              <li>• 6 Workers (production)</li>
-              <li>• Own Cloudflare account</li>
-              <li>• Own authentication</li>
-            </ul>
-          </div>
-          <div>
-            <div className="font-mono text-xs mb-2" style={{ color: COLORS.accentDark }}>MIS INTELLIGENCE PLATFORM</div>
-            <ul className="space-y-1 text-sm" style={{ color: COLORS.textDarkMuted }}>
-              <li>• Separate GitHub repository</li>
-              <li>• Separate D1 databases (aggregated/normalized)</li>
-              <li>• Own Worker(s)</li>
-              <li>• Own Cloudflare account</li>
-              <li>• Own authentication</li>
-            </ul>
-          </div>
-        </div>
-        <p className="text-base mb-6" style={{ color: COLORS.textDarkMuted }}>
-          The platform will sit above existing operational systems as an aggregation and
-          intelligence layer — reading data from multiple sources, normalizing it into its own
-          schema, and serving management intelligence. It will not modify Jalaram&apos;s data
-          or share Jalaram&apos;s sessions.
-        </p>
-        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.border }}>
+        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.border }}>
           <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
                style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
-{`   ┌─────────────────────────┐   ┌─────────────────────────┐
-   │  JALARAM FEEDS ERP      │   │  OTHER SYSTEMS           │
-   │  (separate repo + DBs)   │   │  (CRM, Sheets, etc.)    │
-   │  8 D1 databases          │   │                          │
-   └────────────┬─────────────┘   └─────────────┬────────────┘
-                │  READ-ONLY                  │  READ-ONLY
-                │  (snapshot / API)            │
-                └──────────────┬──────────────┘
-                               ▼
-                  ┌────────────────────────────┐
-                  │   MIS AGGREGATION LAYER    │
-                  │   (own repo + own account)  │
-                  │   Cloudflare Workers        │
-                  └─────────────┬──────────────┘
-                                │
-                  ┌─────────────┴──────────────┐
-                  │                            │
-                  ▼                            ▼
-   ┌──────────────────────────┐   ┌──────────────────────────┐
-   │   MIS D1 DATABASES       │   │   WORKERS AI LAYER       │
-   │   (separate, normalized)│   │   (anomaly detection)    │
-   └───────────┬──────────────┘   └─────────────┬────────────┘
-               │                                │
-               └───────────────┬────────────────┘
-                               ▼
-                  ┌────────────────────────────┐
-                  │  EXECUTIVE DASHBOARDS       │
-                  │  + SCHEDULED REPORTS         │
-                  └────────────────────────────┘`}
+{`RAW DATA → INGESTION → VALIDATION → ETL/TRANSFORM → SQL DATABASE →
+BUSINESS LOGIC → ANALYTICS ENGINE →
+  ├── DASHBOARDS
+  ├── ALERT ENGINE
+  └── REPORT ENGINE
+              ↓
+      MANAGEMENT DECISION SUPPORT`}
           </pre>
+        </div>
+        <div className="grid md:grid-cols-2 gap-3">
+          <div className="rounded p-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+            <div className="font-mono text-xs mb-2" style={{ color: COLORS.accent }}>PROJECT</div>
+            <p className="text-sm" style={{ color: COLORS.textCool }}>MIS Intelligence Platform</p>
+            <p className="text-xs mt-1" style={{ color: COLORS.textMuted }}>Separate Git repo · Separate database · Independent deployment</p>
+          </div>
+          <div className="rounded p-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+            <div className="font-mono text-xs mb-2" style={{ color: COLORS.accent }}>PRIMARY GOAL</div>
+            <p className="text-sm" style={{ color: COLORS.textCool }}>Automated business reporting + decision intelligence</p>
+            <p className="text-xs mt-1" style={{ color: COLORS.textMuted }}>No manual spreadsheet calculations</p>
+          </div>
         </div>
       </CaseStudySection>
 
-      {/* 03 — Planned Modules */}
-      <CaseStudySection id="planned-modules" num="03 — Planned Modules" title="What it will do" dark={true}>
+      {/* 02 — Critical Separation Rule */}
+      <CaseStudySection id="separation" num="02 — Critical Separation Rule" title="Independent from Jalaram Feeds ERP" dark={false}>
+        <div className="rounded-lg p-5 mb-6 flex items-start gap-3"
+             style={{ background: COLORS.bgLightCard, border: `1px solid ${COLORS.border}`, borderLeft: `4px solid ${COLORS.accentDark}` }}>
+          <AlertCircleIcon className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.accentDark }} />
+          <div>
+            <div className="font-bold text-sm mb-2" style={{ color: COLORS.textDark }}>Mandatory separation</div>
+            <p className="text-sm" style={{ color: COLORS.textDarkMuted }}>
+              This project must remain completely separate from Jalaram Feeds ERP. Do not reuse the
+              Jalaram production database, credentials, tables, APIs, secrets, customer data, supplier
+              data, employee data or proprietary files. Create a new repository, new database, new
+              environment variables and independent deployment.
+            </p>
+          </div>
+        </div>
         <div className="grid md:grid-cols-2 gap-5">
+          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>Jalaram Feeds ERP (existing)</h3>
+            <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
+              <li>• Existing GitHub repository</li>
+              <li>• Existing production environment</li>
+              <li>• 8 production D1 databases</li>
+              <li>• Real business data (private)</li>
+              <li>• Production secrets</li>
+            </ul>
+          </div>
+          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>MIS Intelligence Platform (NEW)</h3>
+            <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
+              <li>• NEW Git repository</li>
+              <li>• NEW database</li>
+              <li>• NEW Cloudflare/project environment</li>
+              <li>• NEW credentials and secrets</li>
+              <li>• Synthetic / fictional company data only</li>
+            </ul>
+          </div>
+        </div>
+      </CaseStudySection>
+
+      {/* 03 — Fictional Business */}
+      <CaseStudySection id="fictional-business" num="03 — Fictional Business" title="Nova Manufacturing Pvt. Ltd." dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          A fictional manufacturing/distribution company created specifically for this portfolio project.
+          All data shown in the public portfolio is synthetic — never real customer data.
+        </p>
+        <div className="rounded-lg p-6 mb-6"
+             style={{ background: 'rgba(77,168,218,0.08)', border: `1px solid ${COLORS.accent}` }}>
+          <div className="font-mono text-xs mb-2" style={{ color: COLORS.accent }}>FICTIONAL COMPANY</div>
+          <h3 className="text-2xl font-bold mb-3" style={{ color: COLORS.textCool }}>Nova Manufacturing Pvt. Ltd.</h3>
+          <p className="text-sm mb-4" style={{ color: COLORS.textMuted }}>
+            Business domains covered:
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {['Sales', 'Purchase', 'Production', 'Inventory', 'Dispatch', 'Customers', 'Suppliers', 'Management Reporting'].map((d) => (
+              <span key={d} className="px-3 py-1 rounded text-xs font-mono"
+                    style={{ background: COLORS.glow + '22', color: COLORS.accent }}>{d}</span>
+            ))}
+          </div>
+        </div>
+      </CaseStudySection>
+
+      {/* 04 — Core Modules */}
+      <CaseStudySection id="modules" num="04 — Core Modules" title="What it will do" dark={false}>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[
-            { title: 'Executive Dashboards', items: ['Real-time KPI tracking', 'Cross-system drill-downs', 'Customizable views per role', 'Mobile-first responsive UI'] },
-            { title: 'AI-Assisted Anomaly Detection', items: ['Statistical outliers in sales/purchase', 'Inventory level warnings', 'Unusual user activity patterns', 'Smart threshold learning'] },
-            { title: 'Natural-Language Business Queries', items: ['"Show me top 10 customers this month"', '"Which items are below reorder level?"', '"Compare production vs last quarter"', 'AI-assisted answer composition'] },
-            { title: 'Automated Reporting', items: ['Scheduled WhatsApp/email reports', 'Daily, weekly, monthly cadences', 'PDF exports with charts', 'Distributed recipient lists'] },
-            { title: 'ETL Pipeline', items: ['Sync from ERP, CRM, sheets', 'Scheduled data refresh', 'Schema validation', 'Error logging and retry'] },
-            { title: 'Forecasting Engine', items: ['Inventory forecasting', 'Sales trend projection', 'Seasonal pattern detection', 'Confidence intervals'] },
+            { title: 'Executive MIS', desc: 'Company KPIs, trends, target achievement, alerts, drill-down' },
+            { title: 'Sales MIS', desc: 'Daily/monthly sales, customers, products, salespersons, targets' },
+            { title: 'Purchase MIS', desc: 'POs, supplier performance, purchase rates, price variance' },
+            { title: 'Production MIS', desc: 'Plan vs actual, achievement, yield, wastage, variance' },
+            { title: 'Inventory MIS', desc: 'Stock movement, valuation, low stock, critical stock, overstock' },
+            { title: 'Data Quality', desc: 'Duplicates, missing data, invalid UOM/items, abnormal rates' },
+            { title: 'Intelligence', desc: 'Forecasting, anomaly detection, variance analysis' },
+            { title: 'Automation', desc: 'Scheduled refresh, reports, email/WhatsApp alerts, audit logs' },
           ].map((m) => (
-            <div key={m.title}
-                 className="rounded-lg p-5"
-                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
-              <h3 className="text-base font-bold mb-3" style={{ color: COLORS.accent }}>{m.title}</h3>
-              <ul className="space-y-1">
-                {m.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-xs" style={{ color: COLORS.textMuted }}>
-                    <span style={{ color: COLORS.accent }}>•</span>
-                    <span>{item}</span>
+            <div key={m.title} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <h3 className="font-bold text-sm mb-2" style={{ color: COLORS.headerFill }}>{m.title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: COLORS.textDarkMuted }}>{m.desc}</p>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 05 — Executive Dashboard */}
+      <CaseStudySection id="exec-dashboard" num="05 — Executive Dashboard" title="First screen — management summary" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          The first screen provides a management-level summary without requiring the user to inspect raw tables.
+        </p>
+        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.accent + '33' }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`┌──────────────────────────────────────────────┐
+│         NOVA MANUFACTURING MIS                │
+├──────────────────────────────────────────────┤
+│  SALES      PURCHASE    PRODUCTION  INVENTORY │
+│  ₹2.84 Cr   ₹1.72 Cr    1,284 MT    ₹46.2 L   │
+├──────────────────────────────────────────────┤
+│  Sales trend / target vs achievement          │
+├──────────────────────────────────────────────┤
+│  Production performance    Inventory health   │
+├──────────────────────────────────────────────┤
+│  ALERTS: stock · purchase delay · prod var.   │
+└──────────────────────────────────────────────┘`}
+          </pre>
+        </div>
+        <p className="text-sm mt-4" style={{ color: COLORS.textMuted }}>
+          Numbers above are fictional placeholders for demo. Real dashboard calculates KPIs from database records.
+        </p>
+      </CaseStudySection>
+
+      {/* 06 — Module Requirements */}
+      <CaseStudySection id="module-reqs" num="06 — Module Requirements" title="Detailed module scope" dark={false}>
+        <div className="space-y-4">
+          {[
+            { title: 'Sales MIS', items: ['KPIs: total sales, monthly/daily sales, orders, customers, AOV, target achievement, growth', 'Charts: daily/monthly trend, product/customer/region/salesperson-wise', 'Drill-down: KPI → product/customer → order → transaction', 'Target vs actual comparison with date filters'] },
+            { title: 'Purchase MIS', items: ['KPIs: total purchase, PO count, pending POs, supplier count, avg purchase rate, delayed deliveries', 'Supplier performance: orders, on-time percentage, delay count', 'Purchase Price Variance (PPV) for material rate changes', 'Alert when material rate changes beyond configurable threshold'] },
+            { title: 'Production MIS', items: ['Plan vs actual production', 'Achievement percentage and production variance', 'Yield and wastage analysis', 'Product-wise and date-wise production analysis', 'Optional downtime data for advanced analysis'] },
+            { title: 'Inventory MIS', items: ['Stock movement: Opening + Purchase + Production + Transfer In − Consumption − Dispatch ± Adjustment = Closing', 'Inventory valuation by product/category/warehouse', 'Stock status: Critical, Low, Normal, Overstock', 'Reorder-level monitoring · Inventory aging · Days of stock calculation'] },
+          ].map((m) => (
+            <div key={m.title} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>{m.title}</h3>
+              <ul className="space-y-1.5">
+                {m.items.map((i) => (
+                  <li key={i} className="text-xs flex items-start gap-2" style={{ color: COLORS.textDarkMuted }}>
+                    <span style={{ color: COLORS.accentDark }}>•</span>
+                    <span>{i}</span>
                   </li>
                 ))}
               </ul>
@@ -1056,109 +1093,316 @@ function MisIntelligenceRoadmap() {
         </div>
       </CaseStudySection>
 
-      {/* 04 — Planned Tech Stack */}
-      <CaseStudySection id="planned-stack" num="04 — Planned Tech Stack" title="What it will be built with" dark={false}>
-        <div className="flex flex-wrap gap-2">
-          {[
-            'Cloudflare Workers', 'Cloudflare D1', 'Workers AI', 'Browser Rendering',
-            'Real-time Dashboards', 'ETL Pipeline', 'Scheduled Cron Triggers',
-            'WhatsApp API', 'Email API', 'PDF Generation', 'Role-based Access',
-            'AI Anomaly Detection', 'Time-series Analysis', 'WebSocket (live updates)',
-          ].map((tech) => (
-            <span key={tech}
-                  className="px-3 py-1.5 rounded text-sm font-mono transition-all hover:scale-105"
-                  style={{ background: 'white', border: `1px solid ${COLORS.border}`, color: COLORS.textDark }}>
-              {tech}
-            </span>
-          ))}
+      {/* 07 — Inventory Forecasting */}
+      <CaseStudySection id="forecasting" num="07 — Inventory Forecasting" title="Predicting critical stock" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          The platform goes beyond reporting and estimates when inventory may become critical using
+          historical consumption, current stock, lead time and safety stock.
+        </p>
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="rounded-lg p-5"
+               style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${COLORS.accent}` }}>
+            <div className="font-mono text-xs mb-3" style={{ color: COLORS.accent }}>EXAMPLE CALCULATION</div>
+            <pre className="text-xs md:text-sm leading-relaxed" style={{ color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`Current Stock          = 1,200 KG
+Avg Daily Consumption  = 180 KG
+Supplier Lead Time     = 5 Days
+Safety Stock           = 300 KG
+
+Days of Stock = Current / Avg Daily
+             = 1,200 / 180
+             = 6.67 Days
+
+→ Flag when projected stock
+   approaches safety stock /
+   lead-time risk zone.`}
+            </pre>
+          </div>
+          <div className="rounded-lg p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+            <h3 className="font-bold text-sm mb-3" style={{ color: COLORS.accent }}>System flags items when:</h3>
+            <ul className="space-y-2 text-xs" style={{ color: COLORS.textMuted }}>
+              <li>• Projected stock falls below safety stock</li>
+              <li>• Days of stock falls below lead time (reorder trigger)</li>
+              <li>• Consumption pattern shows sudden change</li>
+              <li>• Supplier delivery is delayed past lead time</li>
+            </ul>
+          </div>
         </div>
       </CaseStudySection>
 
-      {/* 05 — Roadmap */}
-      <CaseStudySection id="roadmap-timeline" num="05 — Roadmap" title="Where it stands today" dark={true}>
-        <div className="space-y-4">
+      {/* 08 — Data Quality Engine */}
+      <CaseStudySection id="data-quality" num="08 — Data Quality Engine" title="Validate before dashboards" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          Every ingestion pipeline validates data before it reaches management dashboards.
+        </p>
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+            <h3 className="font-bold text-sm mb-3" style={{ color: COLORS.headerFill }}>Validation checks</h3>
+            <ul className="space-y-1.5 text-xs" style={{ color: COLORS.textDarkMuted }}>
+              <li>• Duplicate records</li>
+              <li>• Missing required fields</li>
+              <li>• Invalid dates</li>
+              <li>• Negative or impossible quantities</li>
+              <li>• Invalid item/customer/supplier codes</li>
+              <li>• Invalid UOM</li>
+              <li>• Unmatched master records</li>
+              <li>• Duplicate invoices/orders</li>
+              <li>• Abnormal rates</li>
+            </ul>
+          </div>
+          <div className="rounded-lg p-5" style={{ background: COLORS.bgDark, color: COLORS.textCool, border: `1px solid ${COLORS.accent}33` }}>
+            <div className="font-mono text-xs mb-3" style={{ color: COLORS.accent }}>DATA QUALITY SCORE</div>
+            <div className="text-3xl font-black mb-3" style={{ color: COLORS.accent, fontFamily: 'Georgia, serif' }}>
+              Overall: 96.4%
+            </div>
+            <div className="space-y-1.5 text-xs font-mono" style={{ color: COLORS.textMuted }}>
+              <div className="flex justify-between"><span>Duplicates</span><span style={{ color: COLORS.textCool }}>12</span></div>
+              <div className="flex justify-between"><span>Missing values</span><span style={{ color: COLORS.textCool }}>7</span></div>
+              <div className="flex justify-between"><span>Invalid UOM</span><span style={{ color: COLORS.textCool }}>2</span></div>
+              <div className="flex justify-between"><span>Invalid item codes</span><span style={{ color: COLORS.textCool }}>4</span></div>
+              <div className="flex justify-between"><span>Rate anomalies</span><span style={{ color: COLORS.textCool }}>3</span></div>
+            </div>
+          </div>
+        </div>
+      </CaseStudySection>
+
+      {/* 09 — Anomaly Detection */}
+      <CaseStudySection id="anomaly" num="09 — Anomaly Detection" title="Detect unusual business behavior" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          Detect unusual business behavior rather than simply displaying historical numbers.
+        </p>
+        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.accent + '33' }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`Normal consumption:   100–120 KG/day
+Observed consumption: 186 KG/day
+Deviation:            approximately +62%
+
+ALERT: Consumption anomaly detected for RM-024.
+The system shows:
+  • Item
+  • Date
+  • Expected range
+  • Actual value
+  • Deviation %
+  • Related transaction / reference`}
+          </pre>
+        </div>
+      </CaseStudySection>
+
+      {/* 10 — Automated Reporting */}
+      <CaseStudySection id="automation" num="10 — Automated MIS Reporting" title="Daily 6 AM pipeline" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          Scheduled processing runs automatically every morning at 6 AM.
+        </p>
+        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.border }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`06:00 → Data ingestion
+       → Validation
+       → ETL
+       → KPI calculation
+       → Dashboard refresh
+       → Report generation
+       → Email / WhatsApp distribution`}
+          </pre>
+        </div>
+      </CaseStudySection>
+
+      {/* 11 — AI Layer */}
+      <CaseStudySection id="ai-layer" num="11 — AI / Future Intelligence Layer" title="Grounded AI, not fabricated" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          The AI layer is optional for MVP but designed into the architecture. It answers questions
+          using actual database values and retrieved evidence — not invented numbers.
+        </p>
+        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.accent + '33' }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`User: "Why did production efficiency fall this week?"
+
+Question
+   ↓
+Intent detection
+   ↓
+Relevant KPI / data retrieval
+   ↓
+SQL / analytics tools
+   ↓
+Evidence validation
+   ↓
+AI-generated explanation
+   ↓
+Answer + source records
+
+RULE: AI must NOT fabricate business figures.`}
+          </pre>
+        </div>
+      </CaseStudySection>
+
+      {/* 12 — Database Design */}
+      <CaseStudySection id="db-design" num="12 — Database Design" title="New standalone SQL database" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          Completely new database. Never connects to Jalaram ERP databases.
+        </p>
+        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.border }}>
+          <table className="w-full text-sm">
+            <thead style={{ background: COLORS.headerFill, color: 'white' }}>
+              <tr>
+                <th className="text-left p-3 font-semibold">Category</th>
+                <th className="text-left p-3 font-semibold">Tables</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['Master', 'companies, users, roles, products, categories, customers, suppliers, warehouses, employees, uom_master'],
+                ['Sales', 'sales_orders, sales_order_items'],
+                ['Purchase', 'purchase_orders, purchase_order_items'],
+                ['Production', 'production_orders, production_inputs, production_outputs'],
+                ['Inventory', 'inventory_transactions, inventory_snapshots'],
+                ['Dispatch', 'dispatches, dispatch_items'],
+                ['Analytics', 'daily_sales_summary, daily_production_summary, supplier_performance, product_performance'],
+                ['System', 'audit_logs, data_quality_issues, alerts, notifications'],
+              ].map((row, i) => (
+                <tr key={row[0]} style={{ background: i % 2 === 0 ? 'white' : '#eef3fa' }}>
+                  <td className="p-3 font-semibold" style={{ color: COLORS.textDark }}>{row[0]}</td>
+                  <td className="p-3 font-mono text-xs" style={{ color: COLORS.textDarkMuted }}>{row[1]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CaseStudySection>
+
+      {/* 13 — Tech Stack */}
+      <CaseStudySection id="tech-stack" num="13 — Tech Stack" title="What it will be built with" dark={true}>
+        <div className="grid md:grid-cols-2 gap-4">
           {[
-            { phase: 'Phase 1', title: 'Data Aggregation Layer', status: 'Planned', desc: 'Build ETL pipelines to sync operational data from ERP, CRM, and spreadsheets into a normalized D1 schema.' },
-            { phase: 'Phase 2', title: 'Executive Dashboards', status: 'Planned', desc: 'Real-time KPI dashboards with drill-downs, role-based views, and mobile-first responsive design.' },
-            { phase: 'Phase 3', title: 'AI Anomaly Detection', status: 'Planned', desc: 'Workers AI-powered anomaly detection — surface outliers in sales, inventory, and user activity before they become problems.' },
-            { phase: 'Phase 4', title: 'Natural-Language Queries', status: 'Planned', desc: 'Scoped AI assistant similar to Sahayak in Jalaram ERP — let management ask questions in plain English.' },
-            { phase: 'Phase 5', title: 'Automated Reporting + Forecasting', status: 'Planned', desc: 'Scheduled WhatsApp/email reports, PDF generation, and inventory forecasting with confidence intervals.' },
-          ].map((r) => (
-            <div key={r.phase} className="rounded-lg p-5 flex items-start gap-4"
+            { layer: 'Frontend', tech: 'HTML, CSS, JavaScript, Bootstrap, Chart.js' },
+            { layer: 'Backend', tech: 'Cloudflare Workers / REST APIs' },
+            { layer: 'Database', tech: 'New standalone SQL database (Neon/Postgres or D1)' },
+            { layer: 'Data Processing', tech: 'Python, Pandas, NumPy' },
+            { layer: 'BI', tech: 'Web dashboard + optional Power BI' },
+            { layer: 'Automation', tech: 'Cloudflare Cron / Apps Script / scheduled jobs' },
+            { layer: 'Storage', tech: 'Optional R2 for generated files/reports' },
+            { layer: 'Testing', tech: 'Unit + API + data validation tests' },
+          ].map((s) => (
+            <div key={s.layer} className="rounded p-4 flex items-center justify-between"
                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
-              <div className="flex-shrink-0">
-                <div className="font-mono text-xs px-2 py-1 rounded"
-                     style={{ background: COLORS.accent + '22', color: COLORS.accent }}>
-                  {r.phase}
-                </div>
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-1">
-                  <h3 className="font-bold" style={{ color: COLORS.textCool }}>{r.title}</h3>
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded"
-                        style={{ background: 'rgba(255,255,255,0.05)', color: COLORS.textMuted }}>
-                    {r.status}
-                  </span>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: COLORS.textMuted }}>{r.desc}</p>
-              </div>
+              <span className="text-sm" style={{ color: COLORS.textMuted }}>{s.layer}</span>
+              <span className="font-mono text-xs font-bold text-right" style={{ color: COLORS.accent }}>{s.tech}</span>
             </div>
           ))}
         </div>
       </CaseStudySection>
 
-      {/* 06 — Relationship with Jalaram ERP */}
-      <CaseStudySection id="connection" num="06 — Relationship with Jalaram ERP" title="Independent — but reads from Jalaram" dark={false}>
-        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
-          The MIS Intelligence Platform is a <strong>separate project</strong> with its own repo,
-          its own databases, and its own deployment. It is <strong>not</strong> a module of
-          Jalaram Feeds ERP — it is a sibling system that consumes Jalaram&apos;s data
-          (read-only) as one of several input sources.
+      {/* 14 — 8-Week Roadmap */}
+      <CaseStudySection id="roadmap-8-weeks" num="14 — 8-Week Development Roadmap" title="Planned timeline" dark={false}>
+        <div className="space-y-3">
+          {[
+            { week: 'Week 1', deliverable: 'Project setup, standalone DB, schema, seed data, auth and base UI' },
+            { week: 'Week 2', deliverable: 'Sales + Purchase modules and APIs' },
+            { week: 'Week 3', deliverable: 'Production + Inventory modules and stock engine' },
+            { week: 'Week 4', deliverable: 'Executive dashboard, filters, charts and drill-down' },
+            { week: 'Week 5', deliverable: 'Forecasting, variance analysis, data-quality engine and anomaly detection' },
+            { week: 'Week 6', deliverable: 'Scheduled processing, automated reports, alerts and audit logs' },
+            { week: 'Week 7', deliverable: 'Security, permissions, testing, error handling and performance' },
+            { week: 'Week 8', deliverable: 'Deployment, documentation, GitHub README, screenshots and portfolio case study' },
+          ].map((r) => (
+            <div key={r.week} className="rounded-lg p-4 flex items-start gap-4"
+                 style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <div className="flex-shrink-0">
+                <div className="font-mono text-xs px-2 py-1 rounded font-bold"
+                     style={{ background: COLORS.accent + '22', color: COLORS.accentDark }}>
+                  {r.week}
+                </div>
+              </div>
+              <p className="text-sm" style={{ color: COLORS.textDark }}>{r.deliverable}</p>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 15 — Dev Log / Progress Tracker */}
+      <CaseStudySection id="dev-log" num="15 — Dev Log" title="Last change · Where work stopped" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          Every time work on this project happens, this section gets updated with what changed and
+          exactly where to resume from. No more re-reading the whole spec to find context.
         </p>
-        <div className="rounded-lg p-5 mb-6 flex items-start gap-3"
-             style={{ background: COLORS.bgLightCard, border: `1px solid ${COLORS.border}`, borderLeft: `4px solid ${COLORS.accentDark}` }}>
-          <AlertCircleIcon className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.accentDark }} />
-          <div>
-            <div className="font-bold text-sm mb-1" style={{ color: COLORS.textDark }}>Key clarification</div>
-            <p className="text-sm" style={{ color: COLORS.textDarkMuted }}>
-              Jalaram Feeds ERP will be one of MIS&apos;s data sources. MIS will <strong>not</strong>
-              write back to Jalaram, will <strong>not</strong> share Jalaram&apos;s users table, and
-              will <strong>not</strong> be deployed inside Jalaram&apos;s account. The two systems
-              communicate over read-only API calls (or scheduled snapshot syncs), nothing more.
+        <div className="rounded-lg p-5 mb-4"
+             style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${COLORS.accent}` }}>
+          <div className="flex items-center justify-between mb-3">
+            <div className="font-mono text-xs" style={{ color: COLORS.accent }}>LAST UPDATE</div>
+            <div className="font-mono text-xs" style={{ color: COLORS.textMuted }}>Not started yet</div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <div className="font-mono text-xs mb-1" style={{ color: COLORS.textMuted }}>LAST CHANGE</div>
+              <p className="text-sm" style={{ color: COLORS.textCool }}>
+                Specification finalized. Repo not yet created. Awaiting start of Week 1.
+              </p>
+            </div>
+            <div>
+              <div className="font-mono text-xs mb-1" style={{ color: COLORS.textMuted }}>RESUME FROM</div>
+              <p className="text-sm font-mono" style={{ color: COLORS.accent }}>
+                Week 1 · Step 1 · Create new GitHub repository
+              </p>
+            </div>
+          </div>
+          <div className="border-t pt-3" style={{ borderColor: 'rgba(77,168,218,0.15)' }}>
+            <div className="font-mono text-xs mb-2" style={{ color: COLORS.textMuted }}>NEXT ACTION</div>
+            <p className="text-sm" style={{ color: COLORS.textCool }}>
+              Create <code style={{ color: COLORS.accent }}>mis-intelligence-platform</code> repo on GitHub.
+              Clone locally. Initialize <code style={{ color: COLORS.accent }}>package.json</code> with
+              the recommended structure. Set up <code style={{ color: COLORS.accent }}>.env.example</code>
+              with variable names only (no real secrets).
             </p>
           </div>
         </div>
-        <div className="grid md:grid-cols-2 gap-5">
-          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>From Jalaram ERP, MIS reuses:</h3>
-            <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
-              <li>• Cloudflare Workers architectural patterns (proven)</li>
-              <li>• Sahayak AI as natural-language query prototype</li>
-              <li>• Day End report format as starting point</li>
-              <li>• WhatsApp distribution channel integration patterns</li>
-              <li>• Lesson: gas-shim.js proxy for backward-compatible migration</li>
-            </ul>
-          </div>
-          <div className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>MIS does NOT inherit from Jalaram:</h3>
-            <ul className="space-y-1.5 text-sm" style={{ color: COLORS.textDarkMuted }}>
-              <li>• Own GitHub repository (not a fork of Jalaram)</li>
-              <li>• Own D1 databases (not shared with Jalaram&apos;s 8)</li>
-              <li>• Own Cloudflare account (not under Jalaram&apos;s account)</li>
-              <li>• Own authentication (separate users, separate sessions)</li>
-              <li>• Own deployment pipeline (separate wrangler config)</li>
-            </ul>
-          </div>
+        <div className="rounded p-4 text-xs italic"
+             style={{ background: COLORS.bgLightCard, color: COLORS.textDarkMuted, borderLeft: `3px solid ${COLORS.accentDark}` }}>
+          This section is auto-updated as the project progresses. Each entry records: date, what changed
+          (commit/PR/feature), which file/section it touched, and the exact next step to resume from.
+          Maintained as a JSON file at <code style={{ color: COLORS.accentDark, fontFamily: 'var(--font-geist-mono), monospace' }}>docs/dev-log.json</code> in the MIS repo.
+        </div>
+      </CaseStudySection>
+
+      {/* 16 — Definition of Done */}
+      <CaseStudySection id="done-criteria" num="16 — Definition of Done" title="What &quot;done&quot; means" dark={false}>
+        <ul className="grid md:grid-cols-2 gap-2">
+          {[
+            'Fresh developer can clone repo and recreate database using documented commands',
+            'Synthetic data can populate system without manual spreadsheet editing',
+            'Dashboards calculate KPIs from database records',
+            'Inventory balances reconcile against transaction movements',
+            'Data-quality issues are visible and traceable',
+            'Forecast/anomaly outputs show underlying calculation or evidence',
+            'Automated reports can run on a schedule',
+            'Critical business logic has tests',
+            'No Jalaram ERP proprietary data or credentials present',
+            'README and case study clearly explain architecture and decisions',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2 text-sm p-2"
+                style={{ color: COLORS.textDark, background: 'white', borderRadius: '4px', border: `1px solid ${COLORS.border}` }}>
+              <CheckCircleIcon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: COLORS.accentDark }} />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 rounded p-4 text-sm italic"
+             style={{ background: COLORS.bgLightCard, color: COLORS.textDarkMuted, borderLeft: `3px solid ${COLORS.accentDark}` }}>
+          Important: This document is a build specification, not a claim that every listed feature
+          already exists. Implement features incrementally and only report measured results in the
+          final portfolio case study.
         </div>
       </CaseStudySection>
 
       {/* Get notified */}
-      <CaseStudySection id="notify" num="07 — Get Notified" title="When this ships, you&apos;ll know" dark={true}>
+      <CaseStudySection id="notify" num="17 — Get Notified" title="When this ships, you&apos;ll know" dark={true}>
         <div className="text-center max-w-xl mx-auto">
           <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
-            Want to know when the MIS Intelligence Platform goes live? Drop a message through
-            the contact form below with &quot;MIS Platform&quot; in the subject line — I&apos;ll
-            personally reach out when there&apos;s something worth showing.
+            Want to know when the MIS Intelligence Platform goes live? Drop a message through the
+            contact form below with &quot;MIS Platform&quot; in the subject line — I&apos;ll personally
+            reach out when there&apos;s something worth showing.
           </p>
           <a href="#contact"
              className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-sm font-medium transition-all hover:scale-105"
