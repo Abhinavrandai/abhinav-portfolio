@@ -84,7 +84,7 @@ wrangler login
 npx @cloudflare/next-on-pages
 
 # Deploy
-wrangler pages deploy .vercel/output/static --project-name=jf-erp-portfolio
+wrangler pages deploy .vercel/output/static --project-name=abhinav-portfolio
 ```
 
 ### Option C — Static export (simplest, but loses some Next.js features)
