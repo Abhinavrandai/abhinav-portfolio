@@ -509,12 +509,13 @@ function ContactSection() {
             <span className="font-mono text-xs" style={{ color: COLORS.textCool }}>Email</span>
             <span className="text-xs" style={{ color: COLORS.textMuted }}>gmail.com</span>
           </a>
-          <div className="flex flex-col items-center gap-2 p-4 rounded"
-               style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+          <a href="tel:+917058317661"
+             className="flex flex-col items-center gap-2 p-4 rounded transition-all hover:scale-105"
+             style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
             <PhoneIcon className="w-5 h-5" style={{ color: COLORS.accent }} />
             <span className="font-mono text-xs" style={{ color: COLORS.textCool }}>Phone</span>
-            <span className="text-xs" style={{ color: COLORS.textMuted }}>+91-XXXXXXXXXX</span>
-          </div>
+            <span className="text-xs" style={{ color: COLORS.textMuted }}>+91 70583 17661</span>
+          </a>
         </div>
       </div>
     </section>
