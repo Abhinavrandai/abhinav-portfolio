@@ -26,6 +26,10 @@ import {
   CalendarIcon,
   BriefcaseIcon,
   SparklesIcon,
+  SendIcon,
+  LoaderIcon,
+  CheckCircle2Icon,
+  AlertCircleIcon,
 } from 'lucide-react'
 
 // ─── Crystal Blue palette (matches PDF case study cover) ──────────────────
@@ -470,6 +474,203 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
   )
 }
 
+// ━━━ Contact Form (Web3Forms integration) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Get your free access key from https://web3forms.com (enter your email,
+// receive key via email). Replace the placeholder below.
+const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE'
+
+function ContactForm() {
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState<string>('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setStatus('submitting')
+    setErrorMsg('')
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
+    formData.append('from_name', 'Abhinav Portfolio')
+    formData.append('subject', `New message from ${formData.get('name') || 'Portfolio visitor'}`)
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await response.json()
+
+      if (data.success) {
+        setStatus('success')
+        form.reset()
+        // Reset success message after 6 seconds
+        setTimeout(() => setStatus('idle'), 6000)
+      } else {
+        setStatus('error')
+        setErrorMsg(data.message || 'Submission failed. Please try again.')
+      }
+    } catch (err) {
+      setStatus('error')
+      setErrorMsg('Network error. Please check your connection and try again.')
+    }
+  }
+
+  // Show placeholder notice if access key not configured
+  const isKeyConfigured = WEB3FORMS_ACCESS_KEY !== 'YOUR_ACCESS_KEY_HERE' &&
+                          WEB3FORMS_ACCESS_KEY.length > 10
+
+  if (!isKeyConfigured) {
+    return (
+      <div className="max-w-xl mx-auto mt-12 rounded-lg p-5 text-center"
+           style={{ background: 'rgba(255,255,255,0.03)', border: `1px dashed ${COLORS.accent}66` }}>
+        <AlertCircleIcon className="w-5 h-5 mx-auto mb-2" style={{ color: COLORS.accent }} />
+        <p className="text-sm" style={{ color: COLORS.textMuted }}>
+          Contact form is being configured. Until then, please reach out via the channels above.
+        </p>
+      </div>
+    )
+  }
+
+  if (status === 'success') {
+    return (
+      <div className="max-w-xl mx-auto mt-12 rounded-lg p-8 text-center"
+           style={{ background: 'rgba(77,168,218,0.08)', border: `1px solid ${COLORS.accent}` }}>
+        <CheckCircle2Icon className="w-10 h-10 mx-auto mb-3" style={{ color: COLORS.accent }} />
+        <h3 className="text-xl font-bold mb-2" style={{ color: COLORS.textCool }}>
+          Message sent!
+        </h3>
+        <p className="text-sm" style={{ color: COLORS.textMuted }}>
+          Thanks for reaching out. I&apos;ll get back to you within 24 hours.
+        </p>
+      </div>
+    )
+  }
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    background: 'rgba(255,255,255,0.04)',
+    border: '1px solid rgba(77,168,218,0.25)',
+    borderRadius: '6px',
+    padding: '10px 14px',
+    color: COLORS.textCool,
+    fontSize: '14px',
+    fontFamily: 'inherit',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+  }
+
+  const labelStyle: React.CSSProperties = {
+    display: 'block',
+    fontSize: '12px',
+    fontWeight: 500,
+    color: COLORS.textMuted,
+    marginBottom: '6px',
+    letterSpacing: '0.5px',
+    textTransform: 'uppercase',
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-12 space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="name" style={labelStyle}>Name *</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            placeholder="Your name"
+            style={inputStyle}
+            onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
+            onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
+          />
+        </div>
+        <div>
+          <label htmlFor="email" style={labelStyle}>Email *</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="you@example.com"
+            style={inputStyle}
+            onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
+            onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="subject" style={labelStyle}>Subject</label>
+        <input
+          id="subject"
+          name="subject"
+          type="text"
+          placeholder="What's this about?"
+          style={inputStyle}
+          onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
+          onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="message" style={labelStyle}>Message *</label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows={5}
+          placeholder="Tell me about the role, project, or just say hi..."
+          style={{ ...inputStyle, resize: 'vertical', minHeight: '120px' }}
+          onFocus={(e) => e.currentTarget.style.borderColor = COLORS.accent}
+          onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(77,168,218,0.25)'}
+        />
+      </div>
+
+      {/* Honeypot anti-spam field (hidden from users) */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        style={{ display: 'none' }}
+        tabIndex={-1}
+        defaultChecked={false}
+      />
+
+      {status === 'error' && (
+        <div className="rounded p-3 flex items-start gap-2"
+             style={{ background: 'rgba(255,107,107,0.1)', border: '1px solid rgba(255,107,107,0.4)' }}>
+          <AlertCircleIcon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: '#ff6b6b' }} />
+          <p className="text-sm" style={{ color: '#ff9999' }}>{errorMsg}</p>
+        </div>
+      )}
+
+      <button
+        type="submit"
+        disabled={status === 'submitting'}
+        className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded font-medium transition-all hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed"
+        style={{ background: COLORS.accent, color: COLORS.bgDark }}
+      >
+        {status === 'submitting' ? (
+          <>
+            <LoaderIcon className="w-4 h-4 animate-spin" />
+            Sending...
+          </>
+        ) : (
+          <>
+            Send message
+            <SendIcon className="w-4 h-4" />
+          </>
+        )}
+      </button>
+
+      <p className="text-center text-xs" style={{ color: `${COLORS.textMuted}88` }}>
+        Form submissions are delivered to abhinavrandai403@gmail.com via Web3Forms.
+      </p>
+    </form>
+  )
+}
+
 function ContactSection() {
   return (
     <section id="contact" className="py-24 px-6 relative overflow-hidden" style={{ background: COLORS.bgDark }}>
@@ -508,19 +709,19 @@ function ContactSection() {
             <span className="font-mono text-xs" style={{ color: COLORS.textCool }}>GitHub</span>
             <span className="text-xs" style={{ color: COLORS.textMuted }}>Abhinavrandai</span>
           </a>
-          <a href="https://linkedin.com/in/abhinavrandai" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.linkedin.com/in/abhinav-randai-6980b9234/" target="_blank" rel="noopener noreferrer"
              className="flex flex-col items-center gap-2 p-4 rounded transition-all hover:scale-105"
              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
             <LinkedinIcon className="w-5 h-5" style={{ color: COLORS.accent }} />
             <span className="font-mono text-xs" style={{ color: COLORS.textCool }}>LinkedIn</span>
-            <span className="text-xs" style={{ color: COLORS.textMuted }}>abhinavrandai</span>
+            <span className="text-xs" style={{ color: COLORS.textMuted }}>abhinav-randai</span>
           </a>
-          <a href="mailto:abhinavrandai@gmail.com"
+          <a href="mailto:abhinavrandai403@gmail.com"
              className="flex flex-col items-center gap-2 p-4 rounded transition-all hover:scale-105"
              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
             <MailIcon className="w-5 h-5" style={{ color: COLORS.accent }} />
             <span className="font-mono text-xs" style={{ color: COLORS.textCool }}>Email</span>
-            <span className="text-xs" style={{ color: COLORS.textMuted }}>gmail.com</span>
+            <span className="text-xs" style={{ color: COLORS.textMuted }}>abhinavrandai403</span>
           </a>
           <a href="tel:+917058317661"
              className="flex flex-col items-center gap-2 p-4 rounded transition-all hover:scale-105"
@@ -530,6 +731,9 @@ function ContactSection() {
             <span className="text-xs" style={{ color: COLORS.textMuted }}>+91 70583 17661</span>
           </a>
         </div>
+
+        {/* Contact Form */}
+        <ContactForm />
       </div>
     </section>
   )
