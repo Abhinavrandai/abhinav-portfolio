@@ -1,2 +1,88 @@
-skills/
-node_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+local-*
+.claude
+.z-ai-config
+*.log
+dev.log
+dev.out.log
+test
+prompt
+
+server.log
+# Skills directory
+/skills/
+
+# Original ERP source (cloned, not part of this portfolio)
+/jf-erp-source/
+
+# Tool results / temp
+/tool-results/
+
+# Build scripts (kept locally; not part of deployed site)
+/scripts/
+
+# Generated PDFs (kept in public/ for download, source scripts not needed)
+*.pdf.bak
+
+# Local PDF cover/body intermediates
+scripts/jf_erp_cover.pdf
+scripts/jf_erp_body.pdf
+
+# Prisma local DB
+/prisma/*.db
+/prisma/*.db-journal
+
+# Scaffold dev environment
+/db/
+/mini-services/
+
+# Download dir (PDF is duplicated in public/)
+/download/
+
+# Dev server PID
+/.zscripts/dev.pid
+
+# z-ai tooling (internal)
+/.z-ai-config/
+.z-ai-config
