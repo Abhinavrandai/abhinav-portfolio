@@ -68,16 +68,16 @@ const PROJECTS: Project[] = [
     slug: 'jalaram-feeds-erp',
     title: 'Jalaram Feeds ERP',
     year: '2025 — 2026',
-    role: 'Full-stack Engineer',
-    client: 'Jalaram Feeds (manufacturing)',
-    tagline: 'Cloudflare Workers + D1 ERP for an animal-feed manufacturer',
+    role: 'Full-Stack Developer',
+    client: 'Manufacturing & Feed Operations',
+    tagline: 'Production ERP & Business Operations Platform',
     summary:
-      'A complete ERP covering sales, dispatch, purchase, production, labour payroll, and lab reports — migrated from Google Apps Script to the Cloudflare edge with zero downtime. Six Workers, eight D1 databases, twenty-two thousand lines of vanilla JavaScript.',
-    techBadges: ['Cloudflare Workers', 'D1', 'R2', 'Service Bindings', 'Workers AI', 'Browser Rendering', 'WhatsApp API', 'PBKDF2'],
+      'A production-oriented ERP connecting Purchase, Inventory, Production, Quality, Sales and Dispatch through a centralized Cloudflare-based architecture.',
+    techBadges: ['Cloudflare Workers', 'D1', 'R2', 'Service Bindings', 'WhatsApp API', 'RBAC', 'Workers AI', 'Browser Rendering'],
     stats: [
       { num: '6', label: 'Workers' },
       { num: '8', label: 'D1 DBs' },
-      { num: '22k', label: 'LOC' },
+      { num: '22K', label: 'JS LOC' },
       { num: '39', label: 'Tests' },
     ],
     pdfUrl: '/Jalaram_Feeds_ERP_Case_Study.pdf',
@@ -393,25 +393,28 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
             <button
               key={p.slug}
               onClick={() => onSelect(p)}
-              className="group text-left rounded-lg p-7 transition-all hover:scale-[1.02] focus:outline-none focus:ring-2"
+              className="group text-left rounded-lg p-7 transition-all hover:scale-[1.02] focus:outline-none focus:ring-2 w-full"
               style={{
                 background: 'rgba(255, 255, 255, 0.03)',
                 border: '1px solid rgba(77, 168, 218, 0.2)',
               }}
             >
               <div className="flex items-start justify-between mb-4">
-                <div>
+                <div className="flex-1">
                   <div className="font-mono text-xs mb-1" style={{ color: COLORS.accent }}>
                     {p.year}
                   </div>
                   <h3 className="text-2xl font-bold mb-1" style={{ color: COLORS.textCool }}>
                     {p.title}
                   </h3>
-                  <div className="text-sm" style={{ color: COLORS.textMuted }}>
+                  <div className="text-sm font-medium mb-2" style={{ color: COLORS.accent }}>
+                    {p.tagline}
+                  </div>
+                  <div className="text-xs" style={{ color: COLORS.textMuted }}>
                     {p.role} · {p.client}
                   </div>
                 </div>
-                <ArrowRightIcon className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+                <ArrowRightIcon className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0 ml-3"
                                 style={{ color: COLORS.accent }} />
               </div>
 
@@ -420,7 +423,8 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
               </p>
 
               {/* Stats row */}
-              <div className="grid grid-cols-4 gap-2 mb-5">
+              <div className="grid grid-cols-4 gap-2 mb-5 py-3 px-2 rounded"
+                   style={{ background: 'rgba(77, 168, 218, 0.05)' }}>
                 {p.stats.map((s) => (
                   <div key={s.label} className="text-center">
                     <div className="text-xl font-black" style={{ color: COLORS.accent, fontFamily: 'Georgia, serif' }}>
@@ -434,7 +438,7 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
               </div>
 
               {/* Tech badges */}
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 mb-5">
                 {p.techBadges.slice(0, 5).map((t) => (
                   <span key={t}
                         className="px-2 py-1 rounded text-[10px] font-mono"
@@ -448,6 +452,15 @@ function ProjectsGrid({ projects, onSelect }: { projects: Project[]; onSelect: (
                     +{p.techBadges.length - 5} more
                   </span>
                 )}
+              </div>
+
+              {/* CTA */}
+              <div className="flex items-center gap-2 pt-2 border-t" style={{ borderColor: 'rgba(77, 168, 218, 0.15)' }}>
+                <span className="text-sm font-medium" style={{ color: COLORS.accent }}>
+                  View Case Study
+                </span>
+                <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-all"
+                                style={{ color: COLORS.accent }} />
               </div>
             </button>
           ))}
@@ -555,10 +568,14 @@ function CaseStudyHero({ project }: { project: Project }) {
           </span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black leading-[0.95] tracking-tight mb-6"
+        <h1 className="text-5xl md:text-7xl font-black leading-[0.95] tracking-tight mb-3"
             style={{ color: COLORS.textCool, textShadow: `0 0 40px ${COLORS.accent}44` }}>
           {project.title}
         </h1>
+
+        <p className="text-xl md:text-2xl font-medium mb-6" style={{ color: COLORS.accent }}>
+          {project.tagline}
+        </p>
 
         <div className="flex flex-wrap items-center gap-4 mb-6 text-sm" style={{ color: COLORS.textMuted }}>
           <span className="flex items-center gap-2">
@@ -569,6 +586,8 @@ function CaseStudyHero({ project }: { project: Project }) {
           </span>
           <span>·</span>
           <span>{project.client}</span>
+          <span>·</span>
+          <span>Production System</span>
         </div>
 
         <p className="text-lg md:text-xl max-w-3xl mb-10 leading-relaxed" style={{ color: COLORS.textMuted }}>
@@ -636,7 +655,6 @@ function CaseStudySection({ id, num, title, dark = false, children }: {
 
 function CaseStudyContent({ project }: { project: Project }) {
   if (project.slug !== 'jalaram-feeds-erp') {
-    // Future projects: implement their case study content here
     return (
       <CaseStudySection id="case-content" num="01" title="Case study coming soon">
         <p>Detailed case study for {project.title} will be added soon.</p>
@@ -646,243 +664,477 @@ function CaseStudyContent({ project }: { project: Project }) {
 
   return (
     <>
-      {/* Architecture */}
-      <CaseStudySection id="case-content" num="01 · Architecture" title="The Gate Pattern" dark={false}>
-        <p className="text-lg mb-8" style={{ color: COLORS.textDarkMuted }}>
-          One public Worker handles login, routing, and dashboard aggregation. Five private Workers
-          are reachable only through Cloudflare service bindings — they have no public URL at all.
+      {/* 01 — The Business Problem */}
+      <CaseStudySection id="case-content" num="01 — The Business Problem" title="Before the ERP" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          Jalaram Feeds operates multiple interconnected business processes including procurement,
+          inventory, production, sales, dispatch, laboratory operations and reporting. Previously,
+          several operational activities depended heavily on spreadsheets, manual data entry and
+          disconnected workflows.
         </p>
-
-        <div className="mb-10">
-          <div className="rounded-lg p-6 text-center"
-               style={{ background: COLORS.headerFill, color: 'white', border: `1px solid ${COLORS.accent}` }}>
-            <div className="font-mono text-sm tracking-widest uppercase opacity-80 mb-2">Public URL</div>
-            <div className="text-2xl font-bold mb-2">jalaram-gate.workers.dev</div>
-            <div className="text-sm opacity-90">
-              Login · Auth · Dashboard · Admin · Day End · CRM · Accounts · 8 D1 DBs (read)
-            </div>
-            <div className="mt-3 font-mono text-xs opacity-75">cron: */15 · 9pm · 9am · 10am IST</div>
-          </div>
-
-          <div className="text-center py-4">
-            <div className="font-mono text-xs tracking-widest uppercase" style={{ color: COLORS.accentDark }}>
-              ↓ service bindings (HMAC-signed · GATE_SECRET)
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-            {JALARAM_WORKERS.slice(1).map((w) => (
-              <div key={w.name}
-                   className="rounded p-4 border"
-                   style={{ background: COLORS.bgLightCard, borderColor: COLORS.border }}>
-                <div className="font-mono text-xs font-bold mb-1" style={{ color: COLORS.headerFill }}>
-                  {w.name.replace('jalaram-', '')}
-                </div>
-                <div className="text-xs leading-snug" style={{ color: COLORS.textDarkMuted }}>
-                  {w.role}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Worker inventory table */}
-        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.border }}>
-          <table className="w-full text-sm">
-            <thead style={{ background: COLORS.headerFill, color: 'white' }}>
-              <tr>
-                <th className="text-left p-3 font-semibold">Worker</th>
-                <th className="text-left p-3 font-semibold hidden md:table-cell">Role</th>
-                <th className="text-left p-3 font-semibold">Cron</th>
-                <th className="text-right p-3 font-semibold">Lines</th>
-                <th className="text-right p-3 font-semibold hidden md:table-cell">DBs</th>
-              </tr>
-            </thead>
-            <tbody>
-              {JALARAM_WORKERS.map((w, i) => (
-                <tr key={w.name} style={{ background: i % 2 === 0 ? 'white' : '#eef3fa' }}>
-                  <td className="p-3">
-                    <div className="font-mono text-xs font-bold" style={{ color: COLORS.textDark }}>{w.name}</div>
-                    <div className="text-xs" style={{ color: COLORS.textDarkMuted }}>
-                      {w.public ? '🌐 public' : '🔒 private'}
-                    </div>
-                  </td>
-                  <td className="p-3 hidden md:table-cell text-xs" style={{ color: COLORS.textDarkMuted }}>{w.desc}</td>
-                  <td className="p-3 font-mono text-xs" style={{ color: COLORS.textDark }}>{w.cron}</td>
-                  <td className="p-3 text-right font-mono font-bold" style={{ color: COLORS.accentDark }}>{w.lines}</td>
-                  <td className="p-3 text-right font-mono hidden md:table-cell" style={{ color: COLORS.textDark }}>{w.dbs}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <p className="text-base mb-6" style={{ color: COLORS.textDarkMuted }}>
+          This created challenges such as:
+        </p>
+        <ul className="grid md:grid-cols-2 gap-2 mb-6">
+          {[
+            'Repetitive data entry',
+            'Difficulty maintaining consistent master data',
+            'Manual stock calculations',
+            'Delayed management reporting',
+            'Higher risk of data-entry errors',
+            'Limited traceability between transactions',
+            'Difficulty maintaining role-based access',
+            'Increasing complexity as operational data grew',
+          ].map((item) => (
+            <li key={item} className="flex items-start gap-2 text-sm" style={{ color: COLORS.textDark }}>
+              <span style={{ color: COLORS.accentDark }}>•</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="text-base" style={{ color: COLORS.textDark }}>
+          The objective was to build a centralized ERP platform that could bring these processes
+          into one connected system.
+        </p>
       </CaseStudySection>
 
-      {/* Features */}
-      <CaseStudySection id="features" num="02 · Real-world features" title="Four features that prove the edge pays off" dark={true}>
-        <p className="text-lg mb-8" style={{ color: COLORS.textMuted }}>
-          Each one solves a real operational problem and would have been dramatically more expensive
-          (or impossible) on the previous Apps Script stack.
+      {/* 02 — The Solution */}
+      <CaseStudySection id="solution" num="02 — The Solution" title="A centralized ERP platform" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          I designed and developed a centralized ERP platform that connects core business operations
+          through a common data and workflow architecture.
         </p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {JALARAM_FEATURES.map((f) => {
-            const Icon = f.icon
-            return (
-              <div key={f.title}
-                   className="rounded-lg p-6 transition-all hover:scale-[1.02]"
-                   style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(77, 168, 218, 0.2)' }}>
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 rounded flex items-center justify-center"
-                       style={{ background: COLORS.glow + '33' }}>
-                    <Icon className="w-5 h-5" style={{ color: COLORS.accent }} />
-                  </div>
-                  <span className="font-mono text-xs px-2 py-1 rounded"
-                        style={{ background: COLORS.accent + '22', color: COLORS.accent }}>
-                    {f.tag}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold mb-2" style={{ color: COLORS.textCool }}>{f.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: COLORS.textMuted }}>{f.desc}</p>
-              </div>
-            )
-          })}
+        <p className="text-base mb-6" style={{ color: COLORS.textMuted }}>The system brings together:</p>
+        <div className="rounded-lg p-5 mb-6 font-mono text-sm md:text-base"
+             style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${COLORS.accent}33` }}>
+          <div className="text-center" style={{ color: COLORS.accent }}>
+            Purchase → Inventory → Production → Quality → Sales → Dispatch → Reporting
+          </div>
         </div>
+        <p className="text-base" style={{ color: COLORS.textMuted }}>
+          Instead of maintaining isolated spreadsheets and manual calculations, transactions are
+          connected so that operational activities can update downstream records and reports.
+        </p>
       </CaseStudySection>
 
-      {/* Migration */}
-      <CaseStudySection id="migration" num="03 · Migration story" title="Apps Script → Workers, with zero downtime" dark={false}>
-        <p className="text-lg mb-8" style={{ color: COLORS.textDarkMuted }}>
-          The mandate was uncompromising: zero data loss, zero downtime, and no retraining for end users.
-          The trick was a 200-line proxy shim called <code className="font-mono text-base" style={{ color: COLORS.accentDark }}>gas-shim.js</code>.
+      {/* 03 — System Architecture */}
+      <CaseStudySection id="architecture" num="03 — System Architecture" title="Cloudflare Edge + D1 + R2" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          The architecture was designed around modular business domains rather than keeping the
+          entire application dependent on a single monolithic data structure.
         </p>
+        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.border }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`                         USERS
+                           │
+                           ▼
+                 ┌──────────────────┐
+                 │ Authentication & │
+                 │      RBAC        │
+                 └────────┬─────────┘
+                          │
+                          ▼
+                 ┌──────────────────┐
+                 │ Cloudflare Edge  │
+                 │     Workers      │
+                 └────────┬─────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          │               │                │
+          ▼               ▼                ▼
+      Purchase        Production        Sales
+          │               │                │
+          └───────────────┼────────────────┘
+                          ▼
+                    D1 Databases
+                          │
+             ┌────────────┴────────────┐
+             ▼                         ▼
+        Transaction Data          Reporting
+             │                         │
+             └────────────┬────────────┘
+                          ▼
+                    Management
+                    Intelligence
 
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
-          <div className="rounded-lg p-6" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <h3 className="text-lg font-bold mb-4" style={{ color: COLORS.textDark }}>The gas-shim.js trick</h3>
-            <p className="text-sm leading-relaxed mb-3" style={{ color: COLORS.textDarkMuted }}>
-              The legacy frontends spoke <code className="font-mono text-xs">google.script.run</code> — a
-              positional-argument RPC contract. We re-implemented that surface in a 200-line browser
-              shim that transparently proxied every call to a Worker&apos;s
-              <code className="font-mono text-xs"> /rpc/*</code> endpoint.
-            </p>
-            <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
-              From the frontend&apos;s perspective, nothing changed. The migration proceeded module by
-              module — Sales first, then Purchase, then Production — without ever flag-daying the
-              whole application.
-            </p>
-          </div>
-          <div className="rounded-lg p-6" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <h3 className="text-lg font-bold mb-4" style={{ color: COLORS.textDark }}>Service bindings, not public URLs</h3>
-            <p className="text-sm leading-relaxed mb-3" style={{ color: COLORS.textDarkMuted }}>
-              Five of six Workers have <code className="font-mono text-xs">workers_dev: false</code>.
-              They are reachable only via Cloudflare service bindings — server-to-server calls
-              authenticated by a shared HMAC secret that never leaves Cloudflare&apos;s network.
-            </p>
-            <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
-              Attack surface is one worker wide instead of six. Module workers do not need their own
-              auth layer — they trust the Gate&apos;s signed handoff.
-            </p>
-          </div>
-        </div>
-
-        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.border }}>
-          <table className="w-full text-sm">
-            <thead style={{ background: COLORS.headerFill, color: 'white' }}>
-              <tr>
-                <th className="text-left p-3 font-semibold">Aspect</th>
-                <th className="text-left p-3 font-semibold">Before (Apps Script)</th>
-                <th className="text-left p-3 font-semibold">After (Cloudflare Workers)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {JALARAM_MIGRATION.map((row, i) => (
-                <tr key={row.aspect} style={{ background: i % 2 === 0 ? 'white' : '#eef3fa' }}>
-                  <td className="p-3 font-semibold" style={{ color: COLORS.textDark }}>{row.aspect}</td>
-                  <td className="p-3" style={{ color: COLORS.textDarkMuted }}>
-                    <span className="font-mono text-xs">{row.before}</span>
-                  </td>
-                  <td className="p-3" style={{ color: COLORS.textDark }}>
-                    <span className="font-mono text-xs">{row.after}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </CaseStudySection>
-
-      {/* Engineering */}
-      <CaseStudySection id="engineering" num="04 · Engineering rigor" title="Lazy senior dev, TDD, B-number changelog" dark={false}>
-        <p className="text-lg mb-8" style={{ color: COLORS.textDarkMuted }}>
-          The codebase ships with 39 plain-node test files, a &quot;lazy senior dev&quot; philosophy
-          (AGENTS.md), and a sequential B-number tag on every change since B1.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
-          <div className="rounded-lg p-6" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <CheckCircleIcon className="w-5 h-5" style={{ color: COLORS.accentDark }} />
-              <h3 className="font-bold" style={{ color: COLORS.textDark }}>39 test files</h3>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
-              Plain Node.js, no Jest/Mocha. <code className="font-mono text-xs">node:sqlite</code> as in-memory
-              D1 fake, mocked <code className="font-mono text-xs">fetch</code>. Tests run in milliseconds,
-              never touch live data.
-            </p>
-          </div>
-          <div className="rounded-lg p-6" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <ZapIcon className="w-5 h-5" style={{ color: COLORS.accentDark }} />
-              <h3 className="font-bold" style={{ color: COLORS.textDark }}>Lazy senior dev</h3>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
-              <em>AGENTS.md</em> opens with: &quot;The best code is the code never written.&quot; Seven-rung
-              ladder: YAGNI → existing helper → stdlib → platform → dependency → one-liner → minimum code.
-            </p>
-          </div>
-          <div className="rounded-lg p-6" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <GitBranchIcon className="w-5 h-5" style={{ color: COLORS.accentDark }} />
-              <h3 className="font-bold" style={{ color: COLORS.textDark }}>B-number changelog</h3>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>
-              Every change gets a sequential <code className="font-mono text-xs">B&lt;n&gt;</code> tag in three
-              places: commit message, code comment, README changelog. Current highest is <strong>B167</strong>.
-            </p>
-          </div>
-        </div>
-
-        {/* Code snippet */}
-        <div className="rounded-lg overflow-hidden" style={{ background: COLORS.bgDark }}>
-          <div className="flex items-center justify-between px-4 py-2"
-               style={{ background: 'rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(77,168,218,0.2)' }}>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-red-400" />
-              <div className="w-2 h-2 rounded-full bg-yellow-400" />
-              <div className="w-2 h-2 rounded-full bg-green-400" />
-            </div>
-            <span className="font-mono text-xs" style={{ color: COLORS.textMuted }}>
-              workers/1-gate/index.js — password hashing
-            </span>
-          </div>
-          <pre className="p-6 text-xs md:text-sm overflow-x-auto leading-relaxed"
-               style={{ color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
-            <code>{JALARAM_CODE_SNIPPET}</code>
+                  R2 — File Storage`}
           </pre>
         </div>
       </CaseStudySection>
 
-      {/* Tech stack */}
-      <CaseStudySection id="tech-stack" num="05 · Tech stack" title="What&apos;s under the hood" dark={false}>
-        <div className="flex flex-wrap gap-2">
-          {JALARAM_TECH_STACK.map((tech) => (
-            <span key={tech}
-                  className="px-3 py-1.5 rounded text-sm font-mono transition-all hover:scale-105"
-                  style={{ background: 'white', border: `1px solid ${COLORS.border}`, color: COLORS.textDark }}>
-              {tech}
-            </span>
+      {/* 04 — Core ERP Modules */}
+      <CaseStudySection id="modules" num="04 — Core ERP Modules" title="What the system manages" dark={true}>
+        <div className="grid md:grid-cols-2 gap-5">
+          {[
+            { title: 'Purchase Management', items: ['Purchase entry', 'Supplier management', 'Item master integration', 'Rate management', 'Quantity tracking', 'Purchase history', 'Transaction validation'] },
+            { title: 'Inventory Management', items: ['Movement of raw materials, finished goods', 'Transaction-level tracking (not just balances)', 'Opening + Purchase + Production + Transfer', '− Consumption − Dispatch ± Adjustment = Closing Stock'] },
+            { title: 'Production Management', items: ['Production records for different stages', 'Input materials tracked', 'Output quantities tracked', 'Batch records', 'Consumption + variance', 'Stock impact'] },
+            { title: 'Sales & Dispatch', items: ['Sales entry', 'Dispatch management', 'Product/quantity tracking', 'Customer information', 'Stock impact', 'Transaction history'] },
+            { title: 'Quality / Laboratory', items: ['Quality info as part of operational workflow', 'Production & quality remain connected', 'No isolated records', 'Linked to purchase arrivals'] },
+            { title: 'Reporting & MIS', items: ['Stock reports', 'Purchase / production / sales / dispatch', 'Transaction analysis', 'User/activity information', 'Management-level dashboards'] },
+          ].map((m) => (
+            <div key={m.title}
+                 className="rounded-lg p-5"
+                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+              <h3 className="text-base font-bold mb-3" style={{ color: COLORS.accent }}>{m.title}</h3>
+              <ul className="space-y-1">
+                {m.items.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-xs" style={{ color: COLORS.textMuted }}>
+                    <span style={{ color: COLORS.accent }}>•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 05 — Authentication & RBAC */}
+      <CaseStudySection id="rbac" num="05 — Authentication & RBAC" title="Role-based access control" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          Instead of allowing every user to access every operation, permissions are structured around
+          responsibilities.
+        </p>
+        <div className="rounded-lg overflow-hidden border mb-6" style={{ borderColor: COLORS.border }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`                    USER
+                     │
+                     ▼
+               AUTHENTICATION
+                     │
+                     ▼
+                    ROLE
+                     │
+        ┌────────────┼────────────┐
+        ▼            ▼            ▼
+     Purchase    Production      Sales
+     Access        Access        Access`}
+          </pre>
+        </div>
+        <p className="text-base" style={{ color: COLORS.textDark }}>
+          This provides a controlled environment for operational data — a salesperson&apos;s session
+          cannot, by construction, open the labour payroll module.
+        </p>
+      </CaseStudySection>
+
+      {/* 06 — Data Architecture */}
+      <CaseStudySection id="data" num="06 — Data Architecture" title="Modular business domains" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          The system uses Cloudflare D1 databases for transactional data and R2 for file/object
+          storage. The architecture was designed around modular business domains rather than keeping
+          the entire application dependent on a single monolithic data structure.
+        </p>
+        <div className="grid md:grid-cols-2 gap-3">
+          {[
+            { label: 'Workers', value: '6' },
+            { label: 'D1 Databases', value: '8' },
+            { label: 'Service Bindings', value: '5' },
+            { label: 'Object Storage (R2)', value: '1 bucket' },
+            { label: 'API Communication', value: 'REST-style /rpc/*' },
+            { label: 'Authentication + RBAC', value: 'Yes' },
+          ].map((row) => (
+            <div key={row.label}
+                 className="flex items-center justify-between rounded p-3"
+                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+              <span className="text-sm" style={{ color: COLORS.textMuted }}>{row.label}</span>
+              <span className="font-mono text-sm font-bold" style={{ color: COLORS.accent }}>{row.value}</span>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 07 — Engineering Approach */}
+      <CaseStudySection id="engineering" num="07 — Engineering Approach" title="How it was built" dark={false}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textDarkMuted }}>
+          One of the major goals was to move from spreadsheet-oriented processes toward a structured
+          application architecture.
+        </p>
+        <div className="grid md:grid-cols-2 gap-4">
+          {[
+            { title: 'Modular architecture', desc: 'Business functions are separated into logical modules so that individual workflows can evolve independently.' },
+            { title: 'Validation', desc: 'Important transactions are validated before affecting downstream records.' },
+            { title: 'Traceability', desc: 'Transactions are recorded so that operational changes can be traced back to their source.' },
+            { title: 'Reusable components', desc: 'Common functionality is designed to be reused across ERP modules rather than duplicated.' },
+            { title: 'Testing', desc: 'The system includes automated tests covering important application behavior.' },
+          ].map((e) => (
+            <div key={e.title} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <div className="flex items-center gap-3 mb-2">
+                <CheckCircleIcon className="w-4 h-4" style={{ color: COLORS.accentDark }} />
+                <h3 className="font-bold" style={{ color: COLORS.textDark }}>{e.title}</h3>
+              </div>
+              <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>{e.desc}</p>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 08 — Spreadsheet → ERP */}
+      <CaseStudySection id="transformation" num="08 — Spreadsheet → ERP" title="The transformation" dark={true}>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="rounded-lg p-5"
+               style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${COLORS.textMuted}55` }}>
+            <div className="font-mono text-xs mb-3" style={{ color: COLORS.textMuted }}>BEFORE</div>
+            <pre className="text-xs md:text-sm leading-relaxed" style={{ color: COLORS.textMuted, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`Spreadsheet
+    ↓
+Manual Entry
+    ↓
+Manual Calculation
+    ↓
+Separate Reports
+    ↓
+Management Review`}
+            </pre>
+          </div>
+          <div className="rounded-lg p-5"
+               style={{ background: 'rgba(77,168,218,0.05)', border: `1px solid ${COLORS.accent}` }}>
+            <div className="font-mono text-xs mb-3" style={{ color: COLORS.accent }}>AFTER</div>
+            <pre className="text-xs md:text-sm leading-relaxed" style={{ color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`ERP Transaction
+       ↓
+Validation
+       ↓
+Centralized Database
+       ↓
+Automatic Stock / Business Logic
+       ↓
+Reports & Dashboards
+       ↓
+Management Information`}
+            </pre>
+          </div>
+        </div>
+      </CaseStudySection>
+
+      {/* 09 — Technical Stack */}
+      <CaseStudySection id="tech-stack" num="09 — Technical Stack" title="What it&apos;s built with" dark={false}>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          {[
+            { title: 'Frontend', items: ['HTML', 'CSS', 'JavaScript', 'Responsive UI', 'Reusable interface components'] },
+            { title: 'Backend', items: ['Cloudflare Workers', 'REST-style APIs', 'Service bindings', 'Server-side business logic'] },
+            { title: 'Database', items: ['Cloudflare D1', 'Relational data modelling', 'Transaction-oriented architecture'] },
+            { title: 'Storage', items: ['Cloudflare R2'] },
+            { title: 'Security', items: ['Authentication', 'Role-based access control', 'Permission-based workflows', 'Input validation'] },
+            { title: 'Development', items: ['JavaScript', 'Git', 'Automated testing', 'Cloudflare deployment'] },
+          ].map((s) => (
+            <div key={s.title} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <h3 className="font-bold text-sm mb-3" style={{ color: COLORS.headerFill }}>{s.title}</h3>
+              <ul className="space-y-1">
+                {s.items.map((i) => (
+                  <li key={i} className="text-xs flex items-start gap-2" style={{ color: COLORS.textDarkMuted }}>
+                    <span style={{ color: COLORS.accentDark }}>•</span>
+                    <span>{i}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 10 — System Scale */}
+      <CaseStudySection id="scale" num="10 — System Scale" title="Production-oriented engineering" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          The current implementation demonstrates production-oriented engineering rather than a
+          tutorial application.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          {[
+            { num: '6', label: 'Workers' },
+            { num: '8', label: 'D1 Databases' },
+            { num: '~22K', label: 'JS LOC' },
+            { num: '39', label: 'Tests' },
+          ].map((s) => (
+            <div key={s.label} className="rounded p-5 text-center"
+                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,168,218,0.2)' }}>
+              <div className="text-3xl md:text-4xl font-black mb-1" style={{ color: COLORS.accent, fontFamily: 'Georgia, serif' }}>
+                {s.num}
+              </div>
+              <div className="text-xs tracking-wider uppercase" style={{ color: COLORS.textMuted }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+        <p className="text-sm" style={{ color: COLORS.textMuted }}>
+          The numbers describe the current implementation and may evolve as the system continues to develop.
+        </p>
+      </CaseStudySection>
+
+      {/* 11 — Key Engineering Challenges */}
+      <CaseStudySection id="challenges" num="11 — Key Engineering Challenges" title="Hard problems solved" dark={false}>
+        <div className="space-y-5">
+          {[
+            { num: '01', title: 'Connecting independent business processes', desc: 'Purchase, inventory, production, sales and dispatch cannot be treated as isolated modules. A transaction in one module can affect another module. The system therefore needed consistent transaction flows.' },
+            { num: '02', title: 'Maintaining stock accuracy', desc: 'Inventory is affected by several transaction types — Purchase, Consumption, Production, Transfer, Adjustment, Dispatch. The stock calculation logic needs to remain consistent across modules.' },
+            { num: '03', title: 'Data validation', desc: 'Incorrect master data, units of measurement, quantities or rates can propagate errors into downstream reports. Validation rules were introduced at transaction boundaries to reduce these issues.' },
+            { num: '04', title: 'Scaling beyond spreadsheet workflows', desc: 'As operational data grows, spreadsheet-based workflows become increasingly difficult to maintain. The architecture was therefore moved toward structured application → API → database-backed ERP.' },
+          ].map((c) => (
+            <div key={c.num} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <div className="flex items-start gap-4">
+                <div className="font-mono text-2xl font-black flex-shrink-0"
+                     style={{ color: COLORS.accentDark, fontFamily: 'Georgia, serif' }}>
+                  {c.num}
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold mb-2" style={{ color: COLORS.textDark }}>{c.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: COLORS.textDarkMuted }}>{c.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 12 — What I Built */}
+      <CaseStudySection id="responsibilities" num="12 — What I Built" title="My responsibilities" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          My responsibilities included designing and implementing:
+        </p>
+        <div className="grid md:grid-cols-2 gap-2">
+          {[
+            'ERP module architecture',
+            'Database structures',
+            'Business workflows',
+            'APIs',
+            'Authentication & RBAC',
+            'Inventory logic',
+            'Production workflows',
+            'Purchase workflows',
+            'Sales/dispatch workflows',
+            'Reporting logic',
+            'Cloudflare infrastructure',
+            'Data validation',
+            'Testing',
+            'Deployment',
+          ].map((item) => (
+            <div key={item}
+                 className="flex items-center gap-2 rounded p-2.5"
+                 style={{ background: 'rgba(255,255,255,0.03)' }}>
+              <CheckCircleIcon className="w-4 h-4 flex-shrink-0" style={{ color: COLORS.accent }} />
+              <span className="text-sm" style={{ color: COLORS.textCool }}>{item}</span>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* 13 — Business Impact */}
+      <CaseStudySection id="impact" num="13 — Business Impact" title="What changed for the business" dark={false}>
+        <div className="grid md:grid-cols-2 gap-5 mb-6">
+          {[
+            { title: 'One system', desc: 'for multiple business functions.' },
+            { title: 'One source of operational data', desc: 'instead of disconnected records.' },
+            { title: 'Connected transactions', desc: 'between purchase, inventory, production and sales.' },
+            { title: 'Structured access control', desc: 'for different operational roles.' },
+            { title: 'Faster access to management information', desc: 'through centralized reporting.' },
+          ].map((b) => (
+            <div key={b.title} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <h3 className="font-bold mb-1" style={{ color: COLORS.textDark }}>{b.title}</h3>
+              <p className="text-sm" style={{ color: COLORS.textDarkMuted }}>{b.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="rounded p-4 text-sm italic"
+             style={{ background: COLORS.bgLightCard, color: COLORS.textDarkMuted, borderLeft: `3px solid ${COLORS.accentDark}` }}>
+          Note: Quantitative ROI or percentage improvements should only be added when they are
+          supported by actual measured company data.
+        </div>
+      </CaseStudySection>
+
+      {/* 14 — What I Learned */}
+      <CaseStudySection id="learnings" num="14 — What I Learned" title="Lessons from the build" dark={true}>
+        <p className="text-lg mb-6" style={{ color: COLORS.textMuted }}>
+          Building this system changed my understanding of software development from simply writing
+          features to designing systems around real business processes.
+        </p>
+        <ul className="grid md:grid-cols-2 gap-2">
+          {[
+            'Translating business processes into software workflows',
+            'Designing relational data structures',
+            'Managing dependencies between modules',
+            'Building validation into transactional systems',
+            'Designing role-based access',
+            'Working with cloud infrastructure',
+            'Debugging production workflows',
+            'Testing business-critical logic',
+            'Designing software for real users rather than demo scenarios',
+          ].map((l) => (
+            <li key={l} className="flex items-start gap-2 text-sm" style={{ color: COLORS.textCool }}>
+              <span style={{ color: COLORS.accent }}>•</span>
+              <span>{l}</span>
+            </li>
+          ))}
+        </ul>
+      </CaseStudySection>
+
+      {/* 15 — Future Roadmap */}
+      <CaseStudySection id="roadmap" num="15 — Future Roadmap" title="Where it goes next" dark={false}>
+        <div className="grid md:grid-cols-2 gap-5">
+          {[
+            { title: 'Advanced Analytics', items: ['Executive dashboards', 'Production analytics', 'Inventory forecasting', 'Sales analytics'] },
+            { title: 'Automation', items: ['Automated management reports', 'Alerts & notifications', 'Scheduled workflows'] },
+            { title: 'AI', items: ['Natural-language business queries', 'Operational anomaly detection', 'AI-assisted reporting', 'Management insights'] },
+            { title: 'Integrations', items: ['WhatsApp', 'External APIs', 'Document generation', 'Additional business systems'] },
+          ].map((r) => (
+            <div key={r.title} className="rounded-lg p-5" style={{ background: 'white', border: `1px solid ${COLORS.border}` }}>
+              <h3 className="font-bold mb-3" style={{ color: COLORS.headerFill }}>{r.title}</h3>
+              <ul className="space-y-1">
+                {r.items.map((i) => (
+                  <li key={i} className="text-xs flex items-start gap-2" style={{ color: COLORS.textDarkMuted }}>
+                    <span style={{ color: COLORS.accentDark }}>→</span>
+                    <span>{i}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </CaseStudySection>
+
+      {/* Final Architecture */}
+      <CaseStudySection id="final-architecture" num="Final Architecture" title="The complete picture" dark={true}>
+        <div className="rounded-lg overflow-hidden border" style={{ borderColor: COLORS.accent + '33' }}>
+          <pre className="p-5 text-xs md:text-sm overflow-x-auto leading-relaxed"
+               style={{ background: COLORS.bgDark, color: COLORS.textCool, fontFamily: 'var(--font-geist-mono), monospace' }}>
+{`                         JALARAM FEEDS ERP
+                                │
+          ┌─────────────────────┼─────────────────────┐
+          │                     │                     │
+       PURCHASE             PRODUCTION             SALES
+          │                     │                     │
+          └─────────────────────┼─────────────────────┘
+                                │
+                           INVENTORY
+                                │
+                    ┌───────────┴───────────┐
+                    │                       │
+                 QUALITY                DISPATCH
+                    │                       │
+                    └───────────┬───────────┘
+                                │
+                         CENTRAL DATA
+                                │
+                 ┌──────────────┼──────────────┐
+                 ▼              ▼              ▼
+              REPORTS       DASHBOARDS      AUTOMATION
+                 │              │              │
+                 └──────────────┼──────────────┘
+                                ▼
+                           MANAGEMENT`}
+          </pre>
+        </div>
+        <div className="mt-6 rounded p-5 text-center"
+             style={{ background: 'rgba(77,168,218,0.05)', border: `1px solid ${COLORS.accent}33` }}>
+          <p className="text-base md:text-lg font-medium mb-2" style={{ color: COLORS.textCool }}>
+            Jalaram Feeds ERP is a production-oriented business management platform designed to
+            connect procurement, inventory, production, quality, sales and dispatch into a
+            centralized, role-controlled system.
+          </p>
+          <p className="text-sm" style={{ color: COLORS.textMuted }}>
+            It represents the transition from spreadsheet-driven operational processes toward a
+            structured, cloud-based ERP architecture.
+          </p>
         </div>
       </CaseStudySection>
     </>
